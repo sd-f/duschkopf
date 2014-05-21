@@ -14,38 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package at.tugraz.eegs.demonativejavaapp;
-
-import at.tugraz.eegs.demonativejavaapp.business.Auto;
-import java.util.ArrayList;
-import java.util.List;
+package at.tugraz.eegs.demonativejavaapp.business;
 
 /**
  *
  * @author Lucas Reeh <lreeh@tugraz.at>
  */
-public class App {
+public class Auto extends GenerellesFahrzeugImpl {
 
-  public static void main(String[] args) {
+  private String marke;
 
-    List<Auto> autos = new ArrayList<Auto>();
-
-    Auto auto1 = new Auto();
-    auto1.setMarke("Audi");
-    auto1.setName("A4");
-
-    Auto auto2 = new Auto();
-    auto2.setMarke("Volkswagen");
-    auto2.setName("T4");
-
-    autos.add(auto1);
-    autos.add(auto2);
-
-    System.out.println("Autos Loop");
-
-    for (Auto dasAuto : autos) {
-      dasAuto.printName();
-    }
-
+  @Override
+  public void printName() {
+    super.printName();
+    System.out.println("Mark: " + this.marke);
   }
+
+  public String getMarke() {
+    return marke;
+  }
+
+  public void setMarke(String marke) {
+    this.marke = marke;
+  }
+
 }
