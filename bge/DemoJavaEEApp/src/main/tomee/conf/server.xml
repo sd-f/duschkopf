@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2014 Lucas Reeh <lreeh@tugraz.at>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<Server host="localhost" port="8005" shutdown="SHUTDOWN">
+  <!-- TomEE integration with Tomcat -->
+  <Listener className="org.apache.tomee.catalina.ServerListener" />
+
+  <Service name="Catalina">
+
+    <!-- Connectors are entry points (HTTP, AJP...) -->
+    <Connector port="8080" protocol="HTTP/1.1" />
+
+    <Engine name="Catalina" defaultHost="localhost">
+      <!--
+       folder webapps will scanned for webapps
+       and webapps will be deployed on localhost
+      -->
+      <Host name="localhost"  appBase="webapps" />
+    </Engine>
+  </Service>
+</Server>
