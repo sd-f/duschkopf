@@ -8,6 +8,7 @@
   <modules>
     <module>DemoNativeJavaApp</module>
     <module>DemoJavaEEApp</module>
+    <module>BoardGameEditor</module>
   </modules>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
