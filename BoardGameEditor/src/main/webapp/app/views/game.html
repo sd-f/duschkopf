@@ -1,0 +1,8 @@
+<div ng-controller="GameController">
+  <div ng-model="game">
+    <h1>Game {{game.id}}</h1>
+    <div ng-repeat="gameobject in game.gameObjects">
+      <div>[{{gameobject.id}}] <a ng-href="#/object/{{gameobject.id}}">{{gameobject.name}}</a></div>
+    </div>
+  </div>
+</div>

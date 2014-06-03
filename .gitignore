@@ -1,4 +1,5 @@
-/bge/DemoNativeJavaApp/target/
-/bge/DemoJavaEEApp/target/
-/bge/DemoJavaEEApp - Kopie/target/
-/bge/BoardGameEditor/target/
+/BoardGameEditor/target/
+
+#intellij files
+out/
+.idea/
