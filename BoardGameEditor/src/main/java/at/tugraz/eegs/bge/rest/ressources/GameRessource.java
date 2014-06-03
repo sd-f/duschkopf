@@ -17,17 +17,16 @@
 package at.tugraz.eegs.bge.rest.ressources;
 
 import at.tugraz.eegs.bge.business.Game;
+import at.tugraz.eegs.bge.business.GameObject;
 import at.tugraz.eegs.bge.business.services.GameControllerImpl;
 import at.tugraz.eegs.bge.business.x3d.Scene;
-import at.tugraz.eegs.bge.business.x3d.X3DGroupingNode;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -43,10 +42,22 @@ public class GameRessource implements Serializable {
   GameControllerImpl gameController;
 
   @GET
-  @Path("/init")
+  @Path("/")
   @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
   public Game getGame() {
     return gameController.getGame();
+  }
+
+  @GET
+  @Path("/object/{id}")
+  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+  public GameObject getObjectGame(@PathParam("id") String id) {
+    for (GameObject gameObject : gameController.getGame().getGameObjects()) {
+      if (gameObject.getId().equals(id)) {
+        return gameObject;
+      }
+    }
+    return null;
   }
 
   @POST

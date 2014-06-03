@@ -23,20 +23,28 @@ import at.tugraz.eegs.bge.business.x3d.Shape;
 import at.tugraz.eegs.bge.business.x3d.Transform;
 import at.tugraz.eegs.bge.business.x3d.X3DGroupingNode;
 import java.beans.Transient;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Lucas Reeh <lreeh@tugraz.at>
  */
-public class Piece {
+@XmlRootElement
+public class GameObject {
+
+  private String id;
 
   private String name;
 
   private Shape shape = new Shape();
 
-  private PiecePosition position = new PiecePosition(0.0, 0.0, 0.0);
+  private GameObjectPosition position = new GameObjectPosition(0.0, 0.0, 0.0);
 
-  public Piece(String name) {
+  public GameObject() {
+  }
+
+  public GameObject(String name) {
     this.name = name;
 
     // TODO replace with uploadable abstract class
@@ -82,11 +90,20 @@ public class Piece {
     this.shape = shape;
   }
 
-  public PiecePosition getPosition() {
+  @XmlElement(name = "id")
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public GameObjectPosition getPosition() {
     return position;
   }
 
-  public void setPosition(PiecePosition position) {
+  public void setPosition(GameObjectPosition position) {
     this.position = position;
   }
 

@@ -34,14 +34,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Game {
 
+  private String id;
+
   private String name;
 
-  private List<Piece> pieces;
-
-  private Integer initCouter = 0;
+  private List<GameObject> gameObjects;
 
   public Game() {
-    this.pieces = new ArrayList<Piece>();
+    this.gameObjects = new ArrayList<GameObject>();
+  }
+
+  @XmlElement(name = "id")
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   @XmlElement
@@ -54,25 +63,16 @@ public class Game {
   }
 
   @XmlElement
-  public List<Piece> getPieces() {
-    return pieces;
+  public List<GameObject> getGameObjects() {
+    return gameObjects;
   }
 
-  public void setPieces(List<Piece> pieces) {
-    this.pieces = pieces;
+  public void setGameObjects(List<GameObject> pieces) {
+    this.gameObjects = pieces;
   }
 
-  public void addPiece(Piece piece) {
-    this.pieces.add(piece);
-  }
-
-  @XmlElement
-  public Integer getInitCouter() {
-    return initCouter;
-  }
-
-  public void setInitCounter(Integer incCounter) {
-    this.initCouter++;
+  public void addPiece(GameObject piece) {
+    this.gameObjects.add(piece);
   }
 
   public Scene getScene() {
@@ -94,8 +94,8 @@ public class Game {
 
     scene.getMetadataDoubleOrMetadataFloatOrMetadataInteger().add(background);
 
-    for (Piece piece : this.getPieces()) {
-      scene.getMetadataDoubleOrMetadataFloatOrMetadataInteger().add(piece.getTransform());
+    for (GameObject gameObject : this.getGameObjects()) {
+      scene.getMetadataDoubleOrMetadataFloatOrMetadataInteger().add(gameObject.getTransform());
     }
 
     Transform lightTransform = new Transform();

@@ -17,7 +17,7 @@
 package at.tugraz.eegs.bge.business.services;
 
 import at.tugraz.eegs.bge.business.Game;
-import at.tugraz.eegs.bge.business.Piece;
+import at.tugraz.eegs.bge.business.GameObject;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
@@ -35,16 +35,20 @@ public class GameControllerImpl implements Serializable {
   public void init() {
     this.game = new Game();
 
-    this.game.setName("Neues Game");
+    this.game.setId("FIRSTGAME");
+    this.game.setName("Erstes Spiel");
 
-    this.game.addPiece(new Piece("LAUFER1"));
-    this.game.getPieces().get(0).getPosition().setY(0.0);
+    this.game.addPiece(new GameObject("Erster Läufer"));
+    this.game.getGameObjects().get(0).getPosition().setY(0.0);
+    this.game.getGameObjects().get(0).setId("LAUFER1");
 
-    this.game.addPiece(new Piece("LAUFER2"));
-    this.game.getPieces().get(1).getPosition().setY(3.0);
+    this.game.addPiece(new GameObject("Zweiter Läufer"));
+    this.game.getGameObjects().get(1).getPosition().setY(3.0);
+    this.game.getGameObjects().get(1).setId("LAUFER2");
 
-    this.game.addPiece(new Piece("LAUFER3"));
-    this.game.getPieces().get(2).getPosition().setY(-3.0);
+    this.game.addPiece(new GameObject("Erster Bauer"));
+    this.game.getGameObjects().get(2).getPosition().setY(-3.0);
+    this.game.getGameObjects().get(2).setId("PAWN1");
 
   }
 

@@ -24,18 +24,18 @@ import java.util.Locale;
  *
  * @author Lucas Reeh <lreeh@tugraz.at>
  */
-public class PiecePosition {
+public class GameObjectPosition {
 
   private Double x = 0.0;
   private Double y = 0.0;
   private Double z = 0.0;
 
-  public PiecePosition(Double x, Double z) {
+  public GameObjectPosition(Double x, Double z) {
     this.x = x;
     this.z = z;
   }
 
-  public PiecePosition(Double x, Double y, Double z) {
+  public GameObjectPosition(Double x, Double y, Double z) {
     this.x = x;
     this.y = y;
     this.z = z;
