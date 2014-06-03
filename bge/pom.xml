@@ -7,7 +7,6 @@
   <packaging>pom</packaging>
   <modules>
     <module>DemoNativeJavaApp</module>
-    <module>DemoJavaEEApp</module>
     <module>BoardGameEditor</module>
   </modules>
   <properties>
