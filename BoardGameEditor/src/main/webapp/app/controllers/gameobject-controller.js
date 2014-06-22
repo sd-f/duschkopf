@@ -16,13 +16,7 @@
  */
 
 app.controller("GameObjectController", function($scope, $routeParams, gameObjectFactory) {
-  var init = function() {
-    gameObjectFactory.getGameObject($routeParams.id).success(function(data) {
-      $scope.gameObject = data.gameObject;
-    });
-  }
-  ;
-  init();
+  };
 });
 
 app.factory('gameObjectFactory', function($http) {
@@ -30,6 +24,15 @@ app.factory('gameObjectFactory', function($http) {
   factory.getGameObject = function(id) {
     return $http.get("rest/game/object/" + id);
   };
+  
+  factory.saveGameObject = function(gameObject) {
+    return $http.post(
+      "rest/game/object/" + gameObject.id + "/save", 
+      data = gameObject,
+      {headers: {'Content-Type': 'application/json'}}
+    );
+  };
+  
   return factory;
 });
 
