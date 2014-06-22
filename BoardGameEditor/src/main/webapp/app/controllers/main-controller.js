@@ -8,7 +8,7 @@ app.config(function($routeProvider) {
       templateUrl: 'app/views/game.html'
     })
     .when('/game/newobject', {
-      controller: 'GameObjectController',
+      controller: 'GameController',
       templateUrl: 'app/views/gameobject_add.html'
     })
     .when('/object/:id', {
