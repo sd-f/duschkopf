@@ -76,7 +76,12 @@ public class GameRessource implements Serializable {
   @POST 
   @Consumes({MediaType.APPLICATION_JSON})
   @Path("/newobject/save")
-  public Response addObjectGame(String data) {
+  public Response addObjectGame(GameObject gameObject) {
+	  
+	  
+	  
+	  System.out.println("test: "+gameObject.getId());
+	  /*
     JSONObject jsonObj = new JSONObject(data);
     List<GameObject> game_objects = this.getGame().getGameObjects();
     
@@ -89,7 +94,7 @@ public class GameRessource implements Serializable {
     temp.getPosition().setZ(jsonObj.getJSONObject("position").getDouble("z"));
     
     game_objects.add(temp);
-    
+    */
     ResponseBuilder rb = Response.status(Status.ACCEPTED);
     return rb.build();
   }

@@ -62,10 +62,11 @@ app.factory('gameFactory', function($http) {
     );
   };
   
-  factory.addGameObject = function(gameObjectId) {
+  factory.addGameObject = function(gameObject) {
+
     return $http.post(
       "rest/game/newobject/save", 
-      data = gameObjectId,
+      data = { gameObject: gameObject },
       {headers: {'Content-Type': 'application/json'}}
     );
   };

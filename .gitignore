@@ -4,3 +4,7 @@
 out/
 .idea/
 *.hprof
+target/
+.classpath
+.project
+.settings/
