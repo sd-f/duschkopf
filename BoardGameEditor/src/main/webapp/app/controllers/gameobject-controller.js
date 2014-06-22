@@ -16,6 +16,14 @@
  */
 
 app.controller("GameObjectController", function($scope, $routeParams, gameObjectFactory) {
+  
+  gameObjectFactory.getGameObject($routeParams.id).success(function(data){
+    $scope.gameObject = data.gameObject;
+  });
+
+  $scope.saveObject = function()
+  {
+    gameObjectFactory.saveGameObject($scope.gameObject);
   };
 });
 

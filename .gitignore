@@ -3,3 +3,4 @@
 #intellij files
 out/
 .idea/
+*.hprof

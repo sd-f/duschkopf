@@ -20,11 +20,4 @@ app.config(function($routeProvider) {
       templateUrl: 'app/views/gameobject_mod.html'
     })
     .otherwise({redirectTo: '/game'});
-          .when('/game',
-                  {
-                    templateUrl: 'app/views/game.html'
-                  })
-          .when('/object/:id', {
-            templateUrl: 'app/views/gameobject.html'
-          }).otherwise({redirectTo: '/game'});
 });

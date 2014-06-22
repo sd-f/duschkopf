@@ -96,3 +96,23 @@ p b{
   text-transform:uppercase;
   font-size:18px;
 }
+label{
+    width: 70px;
+}
+.gameObjects{
+  width: 300px;
+  height: 40px;
+  margin: auto;
+  text-align: center;
+}
+
+.gameObjects a{
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.gameObjects .button-link{
+  float: right;
+  display: inline;
+  margin-top: 0;
+}

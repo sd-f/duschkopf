@@ -124,9 +124,10 @@ public class GameRessource implements Serializable {
     
     for (GameObject temp : game_objects)
       if (temp.getId().equals(id)) {
+        System.out.println(game_objects.size());
         game_objects.remove(temp);
         ResponseBuilder rb = Response.status(Status.ACCEPTED);
-        
+        System.out.println(game_objects.size());
         return rb.build();
       }
     ResponseBuilder rb = Response.status(Status.NOT_MODIFIED);

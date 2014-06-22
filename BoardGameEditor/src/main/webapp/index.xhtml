@@ -29,7 +29,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <!-- The main CSS file -->
     <link href="css/style.css" rel="stylesheet" />
-
+    
+    <!-- jquery v2.1.1 -->
+    <script src="js/jquery.js"></script>
+    
     <!-- Angular Libraries-->
     <script src="https://code.angularjs.org/1.3.0-beta.10/angular.js"></script>
     <script src="https://code.angularjs.org/1.3.0-beta.10/angular-resource.js"></script>
@@ -48,14 +51,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
 </head>
   <body ng-app="gameEditorApp">
-
-    <!-- GameEditor controllers -->
-    <script src="app/controllers/main-controller.js"></script>
-    <script src="app/controllers/game-controller.js"></script>
-    <script src="app/controllers/gameobject-controller.js"></script>
-
-  </head>
-  <body ng-app="gameEditorApp" >
 
     <div ng-view="gameEditorView"></div>
 

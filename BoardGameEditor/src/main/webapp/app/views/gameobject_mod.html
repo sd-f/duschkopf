@@ -1,0 +1,15 @@
+<div ng-controller="GameObjectController">
+  <div ng-model="gameObject">
+    <h1><a ng-href="#/game">Game</a> Object {{gameObject.name}}</h1>
+    <div>
+      <div>X: <input type="number" id="" ng-model="gameObject.position.x"/></div>
+      <div>Y: <input type="number" id="" ng-model="gameObject.position.y"/></div>
+      <div>Z: <input type="number" id="" ng-model="gameObject.position.z"/></div>
+      <a ng-href="#/object/{{gameObject.id}}/save">
+        <button type="button" class="btn btn-success" ng-click="saveObject();">
+          Save
+        </button>
+      </a>
+    </div>
+  </div>
+</div>

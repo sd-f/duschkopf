@@ -1,10 +1,15 @@
 <div ng-controller="GameObjectController">
-  <div ng-model="gameObject">
+  <div>
     <h1><a ng-href="#/game">Game</a> Object {{gameObject.name}}</h1>
     <div>
       <div>X: {{gameObject.position.x}}</div>
       <div>Y: {{gameObject.position.y}}</div>
       <div>Z: {{gameObject.position.z}}</div>
+      <a ng-href="#/object/{{gameObject.id}}/modify" class="button-link">
+        <button type="button" class="btn btn-warning">
+          Modify
+        </button>
+      </a>
     </div>
   </div>
 </div>
