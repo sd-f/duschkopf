@@ -21,6 +21,7 @@ import at.tugraz.eegs.bge.business.GameObject;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -29,35 +30,63 @@ import javax.ejb.Stateful;
 @Stateful
 public class GameControllerImpl implements Serializable {
 
-  private Game game;
+    private Game game;
 
-  @PostConstruct
-  public void init() {
-    this.game = new Game();
+    @PostConstruct
+    public void init() {
+        this.game = new Game();
 
-    this.game.setId("FIRSTGAME");
-    this.game.setName("Erstes Spiel");
+        this.game.setId("FIRSTGAME");
+        this.game.setName("Erstes Spiel");
 
-    this.game.addPiece(new GameObject("Erster Läufer"));
-    this.game.getGameObjects().get(0).getPosition().setY(0.0);
-    this.game.getGameObjects().get(0).setId("LAUFER1");
+        this.game.addPiece(new GameObject("Erster Läufer"));
+        this.game.getGameObjects().get(0).getPosition().setY(0.0);
+        this.game.getGameObjects().get(0).setId("LAUFER1");
 
-    this.game.addPiece(new GameObject("Zweiter Läufer"));
-    this.game.getGameObjects().get(1).getPosition().setY(3.0);
-    this.game.getGameObjects().get(1).setId("LAUFER2");
+        this.game.addPiece(new GameObject("Zweiter Läufer"));
+        this.game.getGameObjects().get(1).getPosition().setY(3.0);
+        this.game.getGameObjects().get(1).setId("LAUFER2");
 
-    this.game.addPiece(new GameObject("Erster Bauer"));
-    this.game.getGameObjects().get(2).getPosition().setY(-3.0);
-    this.game.getGameObjects().get(2).setId("PAWN1");
+        this.game.addPiece(new GameObject("Erster Bauer"));
+        this.game.getGameObjects().get(2).getPosition().setY(-3.0);
+        this.game.getGameObjects().get(2).setId("PAWN1");
 
-  }
+    }
 
-  public Game getGame() {
-    return game;
-  }
+    public Game getGame() {
+        return game;
+    }
 
-  public void setGame(Game game) {
-    this.game = game;
-  }
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public void addGameObject(GameObject gameObject) {
+        this.getGame().getGameObjects().add(gameObject);
+    }
+
+    public Boolean updateGameObjectAttributes(GameObject gameObject) {
+        for (GameObject gameObjectItem : this.getGame().getGameObjects()) {
+            if (gameObjectItem.getId().equals(gameObject.getId())) {
+                gameObjectItem.updateAttributes(gameObject);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean removeGameObject(String id) {
+        GameObject toDelete = null;
+        for (GameObject gameObjectItem : this.getGame().getGameObjects()) {
+            if (gameObjectItem.getId().equals(id)) {
+                toDelete = gameObjectItem;
+            }
+        }
+        if (null != toDelete) {
+            this.getGame().getGameObjects().remove(toDelete);
+            return true;
+        }
+        return false;
+    }
 
 }

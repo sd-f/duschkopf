@@ -33,86 +33,93 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class GameObject {
 
-  private String id;
+    private String id;
 
-  private String name;
+    private String name;
 
-  private Shape shape = new Shape();
+    private String state;
 
-  private GameObjectPosition position = new GameObjectPosition(0.0, 0.0, 0.0);
+    private Shape shape = new Shape();
 
-  public GameObject() {
-  }
+    private GameObjectPosition position = new GameObjectPosition(0.0, 0.0, 0.0);
 
-  public GameObject(String name) {
-    this.name = name;
+    public GameObject() {
+    }
 
-    // TODO replace with uploadable abstract class
-    this.shape = new Shape();
-    Appearance appearance = new Appearance();
+    public GameObject(String name) {
+        this.name = name;
 
-    this.shape.getRest().add(appearance);
+        // TODO replace with uploadable abstract class
+        this.shape = new Shape();
+        Appearance appearance = new Appearance();
 
-    Material material = new Material();
+        this.shape.getRest().add(appearance);
 
-    material.setDiffuseColor(".2 .8 .2");
-    material.setSpecularColor("0.401 0.401 0.401");
-    material.setEmissiveColor("0.000 0.000 0.000");
-    material.setAmbientIntensity(new Float("0.333"));
-    material.setShininess(new Float("0.098"));
-    material.setTransparency(new Float("0.0"));
+        Material material = new Material();
 
-    appearance.getAppearanceChildContentModel().add(material);
+        material.setDiffuseColor(".2 .8 .2");
+        material.setSpecularColor("0.401 0.401 0.401");
+        material.setEmissiveColor("0.000 0.000 0.000");
+        material.setAmbientIntensity(new Float("0.333"));
+        material.setShininess(new Float("0.098"));
+        material.setTransparency(new Float("0.0"));
 
-    // todo replace all
-    Cylinder cylinder = new Cylinder();
+        appearance.getAppearanceChildContentModel().add(material);
 
-    this.shape.getRest().add(cylinder);
+        // todo replace all
+        Cylinder cylinder = new Cylinder();
 
-  }
+        this.shape.getRest().add(cylinder);
 
-  @Transient
-  public X3DGroupingNode getTransform() {
+    }
 
-    Transform outerTransform = new Transform();
-    outerTransform.setTranslation(this.position.getTranslation());
-    outerTransform.getBackgroundOrColorInterpolatorOrCoordinateInterpolator().add(shape);
+    @Transient
+    public X3DGroupingNode getTransform() {
 
-    return outerTransform;
-  }
+        Transform outerTransform = new Transform();
+        outerTransform.setTranslation(this.position.getTranslation());
+        outerTransform.getBackgroundOrColorInterpolatorOrCoordinateInterpolator().add(shape);
 
-  @Transient
-  public Shape getShape() {
-    return shape;
-  }
+        return outerTransform;
+    }
 
-  public void setShape(Shape shape) {
-    this.shape = shape;
-  }
+    @Transient
+    public Shape getShape() {
+        return shape;
+    }
 
-  @XmlElement(name = "id")
-  public String getId() {
-    return id;
-  }
+    public void setShape(Shape shape) {
+        this.shape = shape;
+    }
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    @XmlElement(name = "id")
+    public String getId() {
+        return id;
+    }
 
-  public GameObjectPosition getPosition() {
-    return position;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public void setPosition(GameObjectPosition position) {
-    this.position = position;
-  }
+    public GameObjectPosition getPosition() {
+        return position;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public void setPosition(GameObjectPosition position) {
+        this.position = position;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void updateAttributes(GameObject gameObject) {
+        this.setName(gameObject.getName());
+        this.setPosition(gameObject.getPosition());
+    }
 
 }

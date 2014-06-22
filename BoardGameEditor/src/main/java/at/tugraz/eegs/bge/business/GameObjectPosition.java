@@ -26,54 +26,57 @@ import java.util.Locale;
  */
 public class GameObjectPosition {
 
-  private Double x = 0.0;
-  private Double y = 0.0;
-  private Double z = 0.0;
+    private Double x = 0.0;
+    private Double y = 0.0;
+    private Double z = 0.0;
 
-  public GameObjectPosition(Double x, Double z) {
-    this.x = x;
-    this.z = z;
-  }
+    public GameObjectPosition() {
+    }
 
-  public GameObjectPosition(Double x, Double y, Double z) {
-    this.x = x;
-    this.y = y;
-    this.z = z;
-  }
+    public GameObjectPosition(Double x, Double z) {
+        this.x = x;
+        this.z = z;
+    }
 
-  public String getTranslation() {
-    StringBuilder sb = new StringBuilder();
-    DecimalFormat formatter = new DecimalFormat("####0.00000", new DecimalFormatSymbols(Locale.ENGLISH));
-    sb.append(formatter.format(x));
-    sb.append(" ");
-    sb.append(formatter.format(z));
-    sb.append(" ");
-    sb.append(formatter.format(y));
-    return sb.toString();
-  }
+    public GameObjectPosition(Double x, Double y, Double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
 
-  public Double getX() {
-    return x;
-  }
+    public String getTranslation() {
+        StringBuilder sb = new StringBuilder();
+        DecimalFormat formatter = new DecimalFormat("####0.00000", new DecimalFormatSymbols(Locale.ENGLISH));
+        sb.append(formatter.format(x));
+        sb.append(" ");
+        sb.append(formatter.format(z));
+        sb.append(" ");
+        sb.append(formatter.format(y));
+        return sb.toString();
+    }
 
-  public void setX(Double x) {
-    this.x = x;
-  }
+    public Double getX() {
+        return x;
+    }
 
-  public Double getY() {
-    return y;
-  }
+    public void setX(Double x) {
+        this.x = x;
+    }
 
-  public void setY(Double y) {
-    this.y = y;
-  }
+    public Double getY() {
+        return y;
+    }
 
-  public Double getZ() {
-    return z;
-  }
+    public void setY(Double y) {
+        this.y = y;
+    }
 
-  public void setZ(Double z) {
-    this.z = z;
-  }
+    public Double getZ() {
+        return z;
+    }
+
+    public void setZ(Double z) {
+        this.z = z;
+    }
 
 }

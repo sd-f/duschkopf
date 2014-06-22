@@ -18,58 +18,57 @@
 
 
 app.controller("GameController", function($scope, gameFactory, $location) {
-  var init = function() {
-    gameFactory.getGame().success(function(data) {
-      $scope.game = data.game;
-      
-      $scope.objs = [];
-      if (data.game.gameObjects !== undefined) 
-        if (data.game.gameObjects["id"] === undefined)
-          for (key in data.game.gameObjects)
-            $scope.objs.push(data.game.gameObjects[key]);
-        else
-          $scope.objs.push(data.game.gameObjects);
-    });
-  };
-  init();
-  
-  $scope.removeObject = function(id)
-  {
-    gameFactory.removeGameObject(id);
-    $location.path("#/game");
-  };
-  
-  $scope.addObject = function()
-  {
-    gameFactory.addGameObject($scope.gameObject);
-    $location.path("#/game");
-  };
+    var init = function() {
+        gameFactory.getGame().success(function(data) {
+            $scope.game = data.game;
+
+            $scope.objs = [];
+            if (data.game.gameObjects !== undefined)
+                if (data.game.gameObjects["id"] === undefined)
+                    for (key in data.game.gameObjects)
+                        $scope.objs.push(data.game.gameObjects[key]);
+                else
+                    $scope.objs.push(data.game.gameObjects);
+        });
+    };
+    init();
+
+    $scope.removeObject = function(id)
+    {
+        gameFactory.removeGameObject(id);
+        $location.path("#/game");
+    };
+
+    $scope.addObject = function()
+    {
+        gameFactory.addGameObject($scope.gameObject);
+        $location.path("#/game");
+    };
 });
 
 
 
 app.factory('gameFactory', function($http) {
-  var factory = {};
-  factory.getGame = function() {
-    return $http.get("rest/game");
-  };
-  
-  factory.removeGameObject = function(gameObjectId) {
-    return $http.post(
-      "rest/game/object/" + gameObjectId + "/remove", 
-      data = gameObjectId,
-      {headers: {'Content-Type': 'application/json'}}
-    );
-  };
-  
-  factory.addGameObject = function(gameObject) {
+    var factory = {};
+    factory.getGame = function() {
+        return $http.get("rest/game");
+    };
 
-    return $http.post(
-      "rest/game/newobject/save", 
-      data = { gameObject: gameObject },
-      {headers: {'Content-Type': 'application/json'}}
-    );
-  };
-  
-  return factory;
+    factory.removeGameObject = function(gameObjectId) {
+        return $http.post(
+                "rest/game/object/" + gameObjectId + "/remove",
+                data = gameObjectId,
+                {headers: {'Content-Type': 'application/json'}}
+        );
+    };
+
+    factory.addGameObject = function(gameObject) {
+        return $http.post(
+                "rest/game/newobject/save",
+                data = {gameObject: gameObject},
+        {headers: {'Content-Type': 'application/json'}}
+        );
+    };
+
+    return factory;
 });

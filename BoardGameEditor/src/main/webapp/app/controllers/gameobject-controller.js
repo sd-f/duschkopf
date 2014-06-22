@@ -16,32 +16,32 @@
  */
 
 app.controller("GameObjectController", function($scope, $routeParams, gameObjectFactory) {
-  
-  gameObjectFactory.getGameObject($routeParams.id).success(function(data){
-    $scope.gameObject = data.gameObject;
-  });
 
-  $scope.saveObject = function()
-  {
-    gameObjectFactory.saveGameObject($scope.gameObject);
-  };
+    gameObjectFactory.getGameObject($routeParams.id).success(function(data) {
+        $scope.gameObject = data.gameObject;
+    });
+
+    $scope.saveObject = function()
+    {
+        gameObjectFactory.saveGameObject($scope.gameObject);
+    };
 });
 
 app.factory('gameObjectFactory', function($http) {
-  var factory = {};
-  factory.getGameObject = function(id) {
-    return $http.get("rest/game/object/" + id);
-  };
-  
-  factory.saveGameObject = function(gameObject) {
-    return $http.post(
-      "rest/game/object/" + gameObject.id + "/save", 
-      data = gameObject,
-      {headers: {'Content-Type': 'application/json'}}
-    );
-  };
-  
-  return factory;
+    var factory = {};
+    factory.getGameObject = function(id) {
+        return $http.get("rest/game/object/" + id);
+    };
+
+    factory.saveGameObject = function(gameObject) {
+        return $http.post(
+                "rest/game/object/" + gameObject.id + "/save",
+                data = {gameObject: gameObject},
+        {headers: {'Content-Type': 'application/json'}}
+        );
+    };
+
+    return factory;
 });
 
 // $("scene").append($.parseXML(dataXML).childNodes[0].childNodes)
