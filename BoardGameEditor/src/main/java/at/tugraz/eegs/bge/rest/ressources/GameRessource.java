@@ -42,63 +42,87 @@ import javax.ws.rs.core.Response.Status;
 @Path("/game")
 public class GameRessource implements Serializable {
 
-  @EJB
-  GameControllerImpl gameController;
+    @EJB
+    GameControllerImpl gameController;
 
-  @GET
-  @Path("/")
-  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-  public Game getGame() {
-    return gameController.getGame();
-  }
-
-  @GET
-  @Path("/object/{id}")
-  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-  public GameObject getObjectGame(@PathParam("id") String id) {
-    for (GameObject gameObject : gameController.getGame().getGameObjects()) {
-      if (gameObject.getId().equals(id)) {
-        return gameObject;
-      }
+    @GET
+    @Path("/")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Game getGame() {
+        return gameController.getGame();
     }
-    return null;
-  }
 
-  @POST
-  @Path("/board/xml")
-  @Produces({MediaType.APPLICATION_XML})
-  public Scene getBoardScene() {
-    return gameController.getGame().getScene();
-  }
-
-  @POST
-  @Consumes({MediaType.APPLICATION_JSON})
-  @Path("/newobject/save")
-  public Response addObjectGame(GameObject gameObject) {
-    gameController.addGameObject(gameObject);
-    ResponseBuilder rb = Response.status(Status.ACCEPTED);
-    return rb.build();
-  }
-
-  @POST
-  @Consumes({MediaType.APPLICATION_JSON})
-  @Path("/object/{id}/save")
-  public Response setObjectGame(GameObject gameObject) {
-    ResponseBuilder rb = Response.status(Status.NOT_FOUND);
-    if (gameController.updateGameObjectAttributes(gameObject)) {
-      rb = Response.status(Status.OK);
+    @POST
+    @Path("/save")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Game setGame(Game game) {
+        gameController.setGame(game);
+        return gameController.getGame();
     }
-    return rb.build();
-  }
 
-  @POST
-  @Consumes({MediaType.APPLICATION_JSON})
-  @Path("/object/{id}/remove")
-  public Response removeObjectGame(String id) {
-    ResponseBuilder rb = Response.status(Status.NOT_FOUND);
-    if (gameController.removeGameObject(id)) {
-      rb = Response.status(Status.OK);
+    @GET
+    @Path("/new")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Game newGame() {
+        gameController.reset();
+        return gameController.getGame();
     }
-    return rb.build();
-  }
+
+    @GET
+    @Path("/new/testdata")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Game newTestdata() {
+        gameController.insertTestdata();
+        return gameController.getGame();
+    }
+
+    @GET
+    @Path("/object/{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public GameObject getGameObject(@PathParam("id") String id) {
+        for (GameObject gameObject : gameController.getGame().getGameObjects()) {
+            if (gameObject.getId().equals(id)) {
+                return gameObject;
+            }
+        }
+        return null;
+    }
+
+    @POST
+    @Path("/board/xml")
+    @Produces({MediaType.APPLICATION_XML})
+    public Scene getBoardScene() {
+        return gameController.getGame().getScene();
+    }
+
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("/newobject/save")
+    public Response addGameObject(GameObject gameObject) {
+        gameController.addGameObject(gameObject);
+        ResponseBuilder rb = Response.status(Status.ACCEPTED);
+        return rb.build();
+    }
+
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("/object/{id}/save")
+    public Response setGameObject(GameObject gameObject) {
+        ResponseBuilder rb = Response.status(Status.NOT_FOUND);
+        if (gameController.updateGameObjectAttributes(gameObject)) {
+            rb = Response.status(Status.OK);
+        }
+        return rb.build();
+    }
+
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("/object/{id}/remove")
+    public Response removeGameObject(String id) {
+        ResponseBuilder rb = Response.status(Status.NOT_FOUND);
+        if (gameController.removeGameObject(id)) {
+            rb = Response.status(Status.OK);
+        }
+        return rb.build();
+    }
 }

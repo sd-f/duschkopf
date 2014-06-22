@@ -23,7 +23,9 @@ app.controller("GameObjectController", function($scope, $routeParams, gameObject
 
     $scope.saveObject = function()
     {
-        gameObjectFactory.saveGameObject($scope.gameObject);
+        gameObjectFactory.saveGameObject($scope.gameObject).success(function(data) {
+            $location.path("#/object/" + $scope.gameObject.id + "/save");
+        });
     };
 });
 

@@ -21,7 +21,6 @@ import at.tugraz.eegs.bge.business.GameObject;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
-import javax.ws.rs.core.Response;
 
 /**
  *
@@ -35,22 +34,6 @@ public class GameControllerImpl implements Serializable {
     @PostConstruct
     public void init() {
         this.game = new Game();
-
-        this.game.setId("FIRSTGAME");
-        this.game.setName("Erstes Spiel");
-
-        this.game.addPiece(new GameObject("Erster Läufer"));
-        this.game.getGameObjects().get(0).getPosition().setY(0.0);
-        this.game.getGameObjects().get(0).setId("LAUFER1");
-
-        this.game.addPiece(new GameObject("Zweiter Läufer"));
-        this.game.getGameObjects().get(1).getPosition().setY(3.0);
-        this.game.getGameObjects().get(1).setId("LAUFER2");
-
-        this.game.addPiece(new GameObject("Erster Bauer"));
-        this.game.getGameObjects().get(2).getPosition().setY(-3.0);
-        this.game.getGameObjects().get(2).setId("PAWN1");
-
     }
 
     public Game getGame() {
@@ -87,6 +70,30 @@ public class GameControllerImpl implements Serializable {
             return true;
         }
         return false;
+    }
+
+    public void reset() {
+        this.setGame(new Game());
+    }
+
+    public void insertTestdata() {
+
+        this.game = new Game();
+
+        this.game.setId("FIRSTGAME");
+        this.game.setName("Erstes Spiel");
+
+        this.game.addPiece(new GameObject("Erster Läufer"));
+        this.game.getGameObjects().get(0).getPosition().setY(0.0);
+        this.game.getGameObjects().get(0).setId("LAUFER1");
+
+        this.game.addPiece(new GameObject("Zweiter Läufer"));
+        this.game.getGameObjects().get(1).getPosition().setY(3.0);
+        this.game.getGameObjects().get(1).setId("LAUFER2");
+
+        this.game.addPiece(new GameObject("Erster Bauer"));
+        this.game.getGameObjects().get(2).getPosition().setY(-3.0);
+        this.game.getGameObjects().get(2).setId("PAWN1");
     }
 
 }

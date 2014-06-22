@@ -40,6 +40,8 @@ public class Game {
 
   private List<GameObject> gameObjects;
 
+  private List<GameRule> rules;
+
   public Game() {
     this.gameObjects = new ArrayList<GameObject>();
   }
@@ -73,6 +75,15 @@ public class Game {
 
   public void addPiece(GameObject piece) {
     this.gameObjects.add(piece);
+  }
+
+  @XmlElement
+  public List<GameRule> getRules() {
+    return rules;
+  }
+
+  public void setRules(List<GameRule> rules) {
+    this.rules = rules;
   }
 
   public Scene getScene() {

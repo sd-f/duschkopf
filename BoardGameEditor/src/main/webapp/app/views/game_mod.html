@@ -1,0 +1,23 @@
+<div ng-controller="GameController">
+    <div ng-model="gameObject">
+        <h1>Game {{game.name}}</h1>
+        <div>
+            <label for="id">ID:</label><input type="string" id="id" ng-model="game.id"/>
+            <label for="name">Name:</label><input type="string" id="name" ng-model="game.name"/>
+        </div>
+    </div>
+    <div>
+        <div class="buttonbar">
+            <button ng-click="saveGame();" type="button" class="btn btn-success">
+                <span class="glyphicon glyphicon-ok"></span> Save
+            </button>
+        </div>
+        <div class="buttonbar">
+            <a ng-href="#/game/" class="button-link">
+                <button type="button" class="btn" >
+                    Cancel
+                </button>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,15 +1,26 @@
 <div ng-controller="GameController">
-  <div>
-    <h1><a ng-href="#/game">Game</a> Object {{gameObject.name}}</h1>
     <div>
-      <div><label for="id">ID: </label><input id="id" type="text" ng-model="gameObject.id"/></div>
-      <div><label for="id">Name: </label><input id="name" type="text" ng-model="gameObject.name"/></div>
-      <div><label for="x">X: </label><input id="x" type="number" ng-model="gameObject.position.x"/></div>
-      <div><label for="y">Y: </label><input id="y" type="number" ng-model="gameObject.position.y"/></div>
-      <div><label for="z">Z: </label><input id="z" type="number" ng-model="gameObject.position.z"/></div>
-      <button type="button" class="btn btn-success" ng-click="addObject();">
-        Save
-      </button>
+        <h1><a ng-href="#/game">Game</a> Object {{gameObject.name}}</h1>
+        <div>
+            <label for="id">ID</label><input id="id" type="text" ng-model="gameObject.id"/>
+            <label for="name">Name</label><input id="name" type="text" ng-model="gameObject.name"/>
+            <label for="x">X</label><input id="x" type="number" ng-model="gameObject.position.x"/>
+            <label for="y">Y</label><input id="y" type="number" ng-model="gameObject.position.y"/>
+            <label for="z">Z</label><input id="z" type="number" ng-model="gameObject.position.z"/>
+        </div>
     </div>
-  </div>
+    <div>
+        <div class="buttonbar">
+            <button ng-click="addObject();" type="button" class="btn btn-success">
+                <span class="glyphicon glyphicon-ok"></span> Save
+            </button>
+        </div>
+        <div class="buttonbar">
+            <a ng-href="#/game/" class="button-link">
+                <button type="button" class="btn" >
+                    Cancel
+                </button>
+            </a>
+        </div>
+    </div>
 </div>

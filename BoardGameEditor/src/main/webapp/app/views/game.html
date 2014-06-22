@@ -1,20 +1,48 @@
 <div ng-controller="GameController">
-  <div>
-    <h1>Game {{game.id}}</h1>
-    <div ng-repeat="obj in objs">
-      <div class="gameObjects">[{{obj.id}}] 
-        <a ng-href="#/object/{{obj.id}}">{{obj.name}}</a>
-        <button type="button" class="btn btn-danger button-link" ng-click="removeObject(obj.id);">
-          Remove
-        </button>
-      </div>
+    <div>
+        <h1>Game {{game.id}}</h1>
+        <div>
+            <div class="buttonbar">
+                <a ng-href="#/game/edit" class="button-link">
+                    <button type="button" class="btn" >
+                        <span class="glyphicon glyphicon-pencil"></span> Edit Game
+                    </button>
+                </a>
+            </div>
+            <div class="buttonbar">
+                <a ng-href="#/game/newobject" class="button-link">
+                    <button type="button" class="btn" >
+                        <span class="glyphicon glyphicon-plus"></span> Add Game-Object
+                    </button>
+                </a>
+            </div>
+            <div class="buttonbar">
+                <a ng-href="#/game/rules" class="button-link">
+                    <button type="button" class="btn">
+                        <span class="glyphicon glyphicon-random"></span> Rules
+                    </button>
+                </a>
+            </div>
+            <div class="buttonbar">
+                <button type="button" class="btn" ng-click="newGame();">
+                    <span class="glyphicon glyphicon-asterisk"></span> New Game
+                </button>
+            </div>
+            <div class="buttonbar">
+                <button type="button" class="btn" ng-click="newTestdata();">
+                    <span class="glyphicon glyphicon-glass"></span> Insert Test-Data
+                </button>
+            </div>
+        </div>
+        <div class="content" ng-repeat="obj in objs">
+            <div class="gameObjects">[{{obj.id}}]
+                <a ng-href="#/object/{{obj.id}}">{{obj.name}}</a>
+                <button type="button" class="btn btn-danger button-link" ng-click="removeObject(obj.id);">
+                    <span class="glyphicon glyphicon-remove"></span> Remove
+                </button>
+            </div>
+        </div>
+        <div class="content" ng-hide="objs.length">No Game-Objects found</div>
     </div>
-  </div>
-  <div>
-    <a ng-href="#/game/newobject" class="button-link">
-      <button type="button" class="btn btn-success">
-        Add
-      </button>
-    </a>
-  </div>
+
 </div>
