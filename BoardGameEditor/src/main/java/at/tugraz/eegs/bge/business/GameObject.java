@@ -23,6 +23,8 @@ import at.tugraz.eegs.bge.business.x3d.Shape;
 import at.tugraz.eegs.bge.business.x3d.Transform;
 import at.tugraz.eegs.bge.business.x3d.X3DGroupingNode;
 import java.beans.Transient;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -31,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Lucas Reeh <lreeh@tugraz.at>
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
 public class GameObject {
 
     private String id;
@@ -83,7 +86,7 @@ public class GameObject {
         return outerTransform;
     }
 
-    @Transient
+    @XmlElement(name = "Shape")
     public Shape getShape() {
         return shape;
     }

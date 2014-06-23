@@ -36,7 +36,7 @@
         </div>
         <div class="content" ng-repeat="obj in objs">
             <div class="gameObjects">[{{obj.id}}]
-                <a ng-href="#/object/{{obj.id}}">{{obj.name}}</a>
+                <a ng-href="#/game/object/{{obj.id}}">{{obj.name}}</a>
                 <button type="button" class="btn btn-danger button-link" ng-click="removeObject(obj.id);">
                     <span class="glyphicon glyphicon-remove"></span> Remove
                 </button>

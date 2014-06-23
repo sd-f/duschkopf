@@ -15,16 +15,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-app.controller("GameObjectController", function($scope, $routeParams, gameObjectFactory) {
+app.controller("GameObjectController", function($scope, $routeParams, $location, gameObjectFactory) {
+    var init = function() {
+        gameObjectFactory.getGameObject($routeParams.id).success(function(data) {
+            $scope.gameObject = data.gameObject;
+        });
 
-    gameObjectFactory.getGameObject($routeParams.id).success(function(data) {
-        $scope.gameObject = data.gameObject;
-    });
+        gameObjectFactory.getGameObjectXML($routeParams.id).success(function(data) {
+            xmlData = $.parseXML(data);
+            xml = $(xmlData);
+            $scope.gameObjectXML = $('<div>').append(xml.find('Shape').clone()).html();
+        });
+    };
+    init();
 
     $scope.saveObject = function()
     {
         gameObjectFactory.saveGameObject($scope.gameObject).success(function(data) {
-            $location.path("#/object/" + $scope.gameObject.id + "/save");
+            $location.path("#/game/object/" + $scope.gameObject.id + "/");
+        });
+    };
+
+    $scope.saveGameObjectXML = function()
+    {
+        gameObjectFactory.saveGameObjectXML($scope.gameObject.id, $scope.gameObjectXML).success(function(data) {
+            $location.path("#/game/object/" + $scope.gameObject.id + "/");
         });
     };
 });
@@ -35,12 +50,39 @@ app.factory('gameObjectFactory', function($http) {
         return $http.get("rest/game/object/" + id);
     };
 
+    factory.getGameObjectXML = function(id) {
+        return $http({
+            url: "rest/game/object/" + id,
+            dataType: 'xml',
+            method: 'GET',
+            data: '',
+            headers: {
+                "Accept": "application/xml"
+            }
+
+        });
+    };
+
     factory.saveGameObject = function(gameObject) {
         return $http.post(
                 "rest/game/object/" + gameObject.id + "/save",
                 data = {gameObject: gameObject},
         {headers: {'Content-Type': 'application/json'}}
         );
+    };
+
+    factory.saveGameObjectXML = function(id, gameObjectXML) {
+        return $http({
+            url: "rest/game/object/" + id + "/xml/save",
+            dataType: 'xml',
+            method: 'POST',
+            data: gameObjectXML,
+            headers: {
+                "Accept": "application/xml"
+                , "Content-Type": "application/xml"
+            }
+
+        });
     };
 
     return factory;

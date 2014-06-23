@@ -18,6 +18,7 @@ package at.tugraz.eegs.bge.business.services;
 
 import at.tugraz.eegs.bge.business.Game;
 import at.tugraz.eegs.bge.business.GameObject;
+import at.tugraz.eegs.bge.business.x3d.Shape;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
@@ -94,6 +95,16 @@ public class GameControllerImpl implements Serializable {
         this.game.addPiece(new GameObject("Erster Bauer"));
         this.game.getGameObjects().get(2).getPosition().setY(-3.0);
         this.game.getGameObjects().get(2).setId("PAWN1");
+    }
+
+    public Boolean updateGameObjectShape(String id, Shape shape) {
+        for (GameObject gameObjectItem : this.getGame().getGameObjects()) {
+            if (gameObjectItem.getId().equals(id)) {
+                gameObjectItem.setShape(shape);
+                return true;
+            }
+        }
+        return false;
     }
 
 }

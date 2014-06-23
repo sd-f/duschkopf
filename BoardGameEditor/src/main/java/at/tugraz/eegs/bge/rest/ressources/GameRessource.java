@@ -20,6 +20,7 @@ import at.tugraz.eegs.bge.business.Game;
 import at.tugraz.eegs.bge.business.GameObject;
 import at.tugraz.eegs.bge.business.services.GameControllerImpl;
 import at.tugraz.eegs.bge.business.x3d.Scene;
+import at.tugraz.eegs.bge.business.x3d.Shape;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -110,6 +111,17 @@ public class GameRessource implements Serializable {
     public Response setGameObject(GameObject gameObject) {
         ResponseBuilder rb = Response.status(Status.NOT_FOUND);
         if (gameController.updateGameObjectAttributes(gameObject)) {
+            rb = Response.status(Status.OK);
+        }
+        return rb.build();
+    }
+
+    @POST
+    @Consumes({MediaType.APPLICATION_XML})
+    @Path("/object/{id}/xml/save")
+    public Response setGameObjectXML(@PathParam("id") String id, Shape gameObjectXML) {
+        ResponseBuilder rb = Response.status(Status.NOT_FOUND);
+        if (gameController.updateGameObjectShape(id, gameObjectXML)) {
             rb = Response.status(Status.OK);
         }
         return rb.build();

@@ -15,11 +15,15 @@ app.config(function($routeProvider) {
                 controller: 'GameController',
                 templateUrl: 'app/views/gameobject_add.html'
             })
-            .when('/object/:id', {
+            .when('/game/object/:id', {
                 controller: 'GameObjectController',
                 templateUrl: 'app/views/gameobject.html'
             })
-            .when('/object/:id/edit', {
+            .when('/game/object/:id/xml', {
+                controller: 'GameObjectController',
+                templateUrl: 'app/views/gameobject_mod_xml.html'
+            })
+            .when('/game/object/:id/edit', {
                 controller: 'GameObjectController',
                 templateUrl: 'app/views/gameobject_mod.html'
             })

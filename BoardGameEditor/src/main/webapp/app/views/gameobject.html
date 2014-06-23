@@ -2,6 +2,8 @@
     <div>
         <h1><a ng-href="#/game">Game</a> Object {{gameObject.name}}</h1>
         <div>
+            <div>ID: {{gameObject.id}}</div>
+            <br />
             <div>X: {{gameObject.position.x}}</div>
             <div>Y: {{gameObject.position.y}}</div>
             <div>Z: {{gameObject.position.z}}</div>
@@ -9,16 +11,23 @@
     </div>
     <div>
         <div class="buttonbar">
-            <a ng-href="#/object/{{gameObject.id}}/modify" class="button-link">
+            <a ng-href="#/game/object/{{gameObject.id}}/edit" class="button-link">
                 <button  type="button" class="btn btn-warning">
                     <span class="glyphicon glyphicon-pencil"></span> Edit
                 </button>
             </a>
         </div>
         <div class="buttonbar">
+            <a ng-href="#/game/object/{{gameObject.id}}/xml" class="button-link">
+                <button  type="button" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-pencil"></span> Edit XML
+                </button>
+            </a>
+        </div>
+        <div class="buttonbar">
             <a ng-href="#/game/" class="button-link">
-                <button type="button" class="btn btn-success">
-                    <span class="glyphicon glyphicon-plus"></span> Back
+                <button type="button" class="btn">
+                    Back
                 </button>
             </a>
         </div>

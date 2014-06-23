@@ -1,0 +1,22 @@
+<div ng-controller="GameObjectController">
+    <div ng-model="gameObject">
+        <h1><a ng-href="#/game">Game</a> Object {{gameObject.name}} XML</h1>
+        <div>
+            <label for="xml">XML</label><textarea cols="100" rows="20" id="name" ng-model="gameObjectXML"/>
+        </div>
+    </div>
+    <div>
+        <div class="buttonbar">
+            <button ng-click="saveGameObjectXML();" type="button" class="btn btn-success">
+                <span class="glyphicon glyphicon-ok"></span> Save
+            </button>
+        </div>
+        <div class="buttonbar">
+            <a ng-href="#/game/object/{{gameObject.id}}" class="button-link">
+                <button type="button" class="btn" >
+                    Cancel
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
