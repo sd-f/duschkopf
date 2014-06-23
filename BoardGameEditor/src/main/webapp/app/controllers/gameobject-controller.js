@@ -32,14 +32,14 @@ app.controller("GameObjectController", function($scope, $routeParams, $location,
     $scope.saveObject = function()
     {
         gameObjectFactory.saveGameObject($scope.gameObject).success(function(data) {
-            $location.path("#/game/object/" + $scope.gameObject.id + "/");
+            $location.path("/game/object/" + $scope.gameObject.id + "/");
         });
     };
 
     $scope.saveGameObjectXML = function()
     {
         gameObjectFactory.saveGameObjectXML($scope.gameObject.id, $scope.gameObjectXML).success(function(data) {
-            $location.path("#/game/object/" + $scope.gameObject.id + "/");
+            $location.path("/game/object/" + $scope.gameObject.id + "/");
         });
     };
 });
@@ -88,5 +88,4 @@ app.factory('gameObjectFactory', function($http) {
     return factory;
 });
 
-// $("scene").append($.parseXML(dataXML).childNodes[0].childNodes)
 

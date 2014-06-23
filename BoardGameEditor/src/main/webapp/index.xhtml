@@ -41,6 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <script src="app/controllers/main-controller.js"></script>
         <script src="app/controllers/game-controller.js"></script>
         <script src="app/controllers/gameobject-controller.js"></script>
+        <script src="app/controllers/gamerule-controller.js"></script>
 
         <!-- bootstrap files -->
         <link href="css/bootstrap.css" rel="stylesheet" />
@@ -49,23 +50,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     </head>
     <body ng-app="gameEditorApp">
-
         <div ng-view="gameEditorView"></div>
-
-        <div id="board">
-            Hier kommt das 3D Teil rein
-            <!-- bitte diesen code nicht entfernen
-            <X3D version="3.0"
-                 profile="Immersive"
-                 xmlns="http://www.x3dom.org/x3dom"
-                 xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-                 xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.0.xsd"
-                 width="700px" height="400px">
-              <scene id="scene">
-
-              </scene>
-            </X3D>
-            -->
-        </div>
     </body>
 </html>

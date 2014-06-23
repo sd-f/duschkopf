@@ -15,7 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-var updateGame = function($scope, data) {
+var xml;
+
+var loadBoard = function($http) {
+    // reload scene
+    $http({
+        method: 'POST',
+        url: "rest/game/board/xml"
+    }).success(function(data, status) {
+        xml = $.parseXML(data);
+        $("scene").append(xml.childNodes[0].childNodes);
+        x3dom.reload();
+
+    }).error(function(data, status) {
+        alert("Error loading 3D-XML " + status)
+    });
+}
+
+var updateGame = function($scope, data, $http) {
     $scope.game = data.game;
     $scope.objs = [];
     if (data.game.gameObjects !== undefined) {
@@ -28,25 +45,28 @@ var updateGame = function($scope, data) {
             $scope.objs.push(data.game.gameObjects);
         }
     }
+    if ($scope.objs.length) {
+        loadBoard($http);
+    }
 };
 
-app.controller("GameController", function($scope, gameFactory, $location, $timeout) {
-
+app.controller("GameController", function($scope, $http, gameFactory, $location, $timeout) {
+    //x3dom.reload();
     var init = function() {
         gameFactory.getGame().success(function(data) {
-            updateGame($scope, data);
+            updateGame($scope, data, $http);
         });
     };
     init();
     $scope.removeObject = function(id)
     {
-        gameFactory.removeGameObject(id).success(function(data) {
+        gameFactory.removeGameObject(id).success(function() {
             $location.path("#/game");
         });
     };
     $scope.addObject = function()
     {
-        gameFactory.addGameObject($scope.gameObject).success(function(data) {
+        gameFactory.addGameObject($scope.gameObject).success(function() {
             $location.path("#/game");
 
         });
@@ -54,21 +74,21 @@ app.controller("GameController", function($scope, gameFactory, $location, $timeo
     $scope.saveGame = function()
     {
         gameFactory.saveGame($scope.game).success(function(data) {
-            updateGame($scope, data);
-            $location.path("#/game");
+            updateGame($scope, data, $http);
+            $location.path("/game");
         });
     };
     $scope.newGame = function()
     {
         gameFactory.newGame($scope.gameObject).success(function(data) {
-            updateGame($scope, data);
+            updateGame($scope, data, $http);
             $scope.game = data.game;
         });
     };
     $scope.newTestdata = function()
     {
         gameFactory.newTestdata($scope.gameObject).success(function(data) {
-            updateGame($scope, data);
+            updateGame($scope, data, $http);
             $scope.game = data.game;
         });
     }

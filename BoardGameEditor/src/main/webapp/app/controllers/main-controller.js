@@ -27,5 +27,17 @@ app.config(function($routeProvider) {
                 controller: 'GameObjectController',
                 templateUrl: 'app/views/gameobject_mod.html'
             })
+            .when('/game/rules', {
+                controller: 'GameRulesController',
+                templateUrl: 'app/views/gamerules.html'
+            })
+            .when('/game/rule/:id/edit', {
+                controller: 'GameRuleController',
+                templateUrl: 'app/views/gamerule_mod.html'
+            })
+            .when('/game/rule/new', {
+                controller: 'GameRuleController',
+                templateUrl: 'app/views/gamerule_mod.html'
+            })
             .otherwise({redirectTo: '/game'});
 });

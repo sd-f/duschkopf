@@ -24,125 +24,130 @@ import at.tugraz.eegs.bge.business.x3d.Transform;
 import at.tugraz.eegs.bge.business.x3d.Viewpoint;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 /**
  *
  * @author Lucas Reeh <lreeh@tugraz.at>
  */
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
+@XmlSeeAlso(GameRule.class)
 public class Game {
 
-  private String id;
+    private String id;
 
-  private String name;
+    private String name;
 
-  private List<GameObject> gameObjects;
+    private List<GameObject> gameObjects = new ArrayList<GameObject>();
 
-  private List<GameRule> rules;
+    private List<GameRule> rules = new ArrayList<GameRule>();
 
-  public Game() {
-    this.gameObjects = new ArrayList<GameObject>();
-  }
-
-  @XmlElement(name = "id")
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  @XmlElement
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  @XmlElement
-  public List<GameObject> getGameObjects() {
-    return gameObjects;
-  }
-
-  public void setGameObjects(List<GameObject> pieces) {
-    this.gameObjects = pieces;
-  }
-
-  public void addPiece(GameObject piece) {
-    this.gameObjects.add(piece);
-  }
-
-  @XmlElement
-  public List<GameRule> getRules() {
-    return rules;
-  }
-
-  public void setRules(List<GameRule> rules) {
-    this.rules = rules;
-  }
-
-  public Scene getScene() {
-    Scene scene = new Scene();
-
-    NavigationInfo navigationInfo = new NavigationInfo();
-
-    navigationInfo.setHeadlight(Boolean.FALSE);
-    navigationInfo.setVisibilityLimit(new Float("0.0"));
-    // missing type='"EXAMINE", "ANY"'
-    navigationInfo.setAvatarSize("0.25, 1.75, 0.75");
-
-    scene.getMetadataDoubleOrMetadataFloatOrMetadataInteger().add(navigationInfo);
-
-    Background background = new Background();
-    background.setDEF("WO_World");
-    background.setGroundColor("0.051 0.051 0.051");
-    background.setSkyColor("0.051 0.051 0.051");
-
-    scene.getMetadataDoubleOrMetadataFloatOrMetadataInteger().add(background);
-
-    for (GameObject gameObject : this.getGameObjects()) {
-      scene.getMetadataDoubleOrMetadataFloatOrMetadataInteger().add(gameObject.getTransform());
+    public Game() {
     }
 
-    Transform lightTransform = new Transform();
-    lightTransform.setDEF("Lamp_TRANSFORM");
-    lightTransform.setTranslation("-4.076245 5.903862 1.005454");
-    lightTransform.setScale("1.000000 1.000000 1.000000");
-    lightTransform.setRotation("-0.498084 -0.762016 -0.413815 1.513875");
+    @XmlElement(name = "id")
+    public String getId() {
+        return id;
+    }
 
-    PointLight pointLight = new PointLight();
-    pointLight.setDEF("LA_Lamp");
-    pointLight.setAmbientIntensity(new Float("0.0000"));
-    pointLight.setColor("1.0000 1.0000 1.0000");
-    pointLight.setRadius(new Float("30.0000"));
-    pointLight.setLocation("-0.0000 -0.0000 0.0000");
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    lightTransform.getBackgroundOrColorInterpolatorOrCoordinateInterpolator().add(pointLight);
+    @XmlElement
+    public String getName() {
+        return name;
+    }
 
-    scene.getMetadataDoubleOrMetadataFloatOrMetadataInteger().add(lightTransform);
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    Transform cameraTransform = new Transform();
-    cameraTransform.setDEF("Lamp_TRANSFORM");
-    cameraTransform.setTranslation("-4.076245 5.903862 1.005454");
-    cameraTransform.setScale("1.000000 1.000000 1.000000");
-    cameraTransform.setRotation("-0.498084 -0.762016 -0.413815 1.513875");
+    @XmlElement
+    public List<GameObject> getGameObjects() {
+        return gameObjects;
+    }
 
-    Viewpoint viewPoint = new Viewpoint();
-    viewPoint.setCenterOfRotation("0 0 0");
-    viewPoint.setPosition("0.00 0.00 -0.00");
-    viewPoint.setOrientation("-0.92 0.35 0.17 0.00");
-    viewPoint.setFieldOfView(new Float("0.858"));
+    public void setGameObjects(List<GameObject> pieces) {
+        this.gameObjects = pieces;
+    }
 
-    cameraTransform.getBackgroundOrColorInterpolatorOrCoordinateInterpolator().add(viewPoint);
+    public void addPiece(GameObject piece) {
+        this.gameObjects.add(piece);
+    }
 
-    scene.getMetadataDoubleOrMetadataFloatOrMetadataInteger().add(cameraTransform);
+    @XmlElement(name = "rules")
+    public List<GameRule> getRules() {
+        return rules;
+    }
 
-    return scene;
-  }
+    public void setRules(List<GameRule> rules) {
+        this.rules = rules;
+    }
+
+    public Scene getScene() {
+        Scene scene = new Scene();
+
+        NavigationInfo navigationInfo = new NavigationInfo();
+
+        navigationInfo.setHeadlight(Boolean.FALSE);
+        navigationInfo.setVisibilityLimit(new Float("0.0"));
+        // missing type='"EXAMINE", "ANY"'
+        navigationInfo.setAvatarSize("0.25, 1.75, 0.75");
+
+        scene.getMetadataDoubleOrMetadataFloatOrMetadataInteger().add(navigationInfo);
+
+        Background background = new Background();
+        background.setDEF("WO_World");
+        background.setGroundColor("0.051 0.051 0.051");
+        background.setSkyColor("0.051 0.051 0.051");
+
+        scene.getMetadataDoubleOrMetadataFloatOrMetadataInteger().add(background);
+
+        for (GameObject gameObject : this.getGameObjects()) {
+            scene.getMetadataDoubleOrMetadataFloatOrMetadataInteger().add(gameObject.getTransform());
+        }
+
+        Transform lightTransform = new Transform();
+        lightTransform.setDEF("Lamp_TRANSFORM");
+        lightTransform.setTranslation("-4.076245 5.903862 1.005454");
+        lightTransform.setScale("1.000000 1.000000 1.000000");
+        lightTransform.setRotation("-0.498084 -0.762016 -0.413815 1.513875");
+
+        PointLight pointLight = new PointLight();
+        pointLight.setDEF("LA_Lamp");
+        pointLight.setAmbientIntensity(new Float("0.0000"));
+        pointLight.setColor("1.0000 1.0000 1.0000");
+        pointLight.setRadius(new Float("30.0000"));
+        pointLight.setLocation("-0.0000 -0.0000 0.0000");
+
+        lightTransform.getBackgroundOrColorInterpolatorOrCoordinateInterpolator().add(pointLight);
+
+        scene.getMetadataDoubleOrMetadataFloatOrMetadataInteger().add(lightTransform);
+
+        Transform cameraTransform = new Transform();
+        cameraTransform.setDEF("Lamp_TRANSFORM");
+        cameraTransform.setTranslation("-4.076245 5.903862 1.005454");
+        cameraTransform.setScale("1.000000 1.000000 1.000000");
+        cameraTransform.setRotation("-0.498084 -0.762016 -0.413815 1.513875");
+
+        Viewpoint viewPoint = new Viewpoint();
+        viewPoint.setCenterOfRotation("0 0 0");
+        viewPoint.setPosition("0.00 0.00 -0.00");
+        viewPoint.setOrientation("-0.92 0.35 0.17 0.00");
+        viewPoint.setFieldOfView(new Float("0.858"));
+
+        cameraTransform.getBackgroundOrColorInterpolatorOrCoordinateInterpolator().add(viewPoint);
+
+        scene.getMetadataDoubleOrMetadataFloatOrMetadataInteger().add(cameraTransform);
+
+        return scene;
+    }
 
 }

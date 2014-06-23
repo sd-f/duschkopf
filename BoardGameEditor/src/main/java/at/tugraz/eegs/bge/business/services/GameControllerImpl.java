@@ -18,8 +18,10 @@ package at.tugraz.eegs.bge.business.services;
 
 import at.tugraz.eegs.bge.business.Game;
 import at.tugraz.eegs.bge.business.GameObject;
+import at.tugraz.eegs.bge.business.GameRule;
 import at.tugraz.eegs.bge.business.x3d.Shape;
 import java.io.Serializable;
+import java.text.RuleBasedCollator;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
 
@@ -95,6 +97,15 @@ public class GameControllerImpl implements Serializable {
         this.game.addPiece(new GameObject("Erster Bauer"));
         this.game.getGameObjects().get(2).getPosition().setY(-3.0);
         this.game.getGameObjects().get(2).setId("PAWN1");
+
+        this.game.getRules().add(new GameRule());
+        this.game.getRules().get(0).setId("INIT");
+        this.game.getRules().get(0).setName("Spielfiguren aufstellen");
+
+        this.game.getRules().add(new GameRule());
+        this.game.getRules().get(1).setId("FIRSTDRAW");
+        this.game.getRules().get(1).setName("Erster Zug");
+
     }
 
     public Boolean updateGameObjectShape(String id, Shape shape) {
@@ -105,6 +116,44 @@ public class GameControllerImpl implements Serializable {
             }
         }
         return false;
+    }
+
+    public boolean removeGameRule(String id) {
+        Integer index = null;
+        for (GameRule rule : this.getGame().getRules()) {
+            if (rule.getId().equals(id)) {
+                index = this.getGame().getRules().indexOf(rule);
+            }
+        }
+        if (null != index) {
+            this.getGame().getRules().remove(index.intValue());
+            return true;
+        }
+        return false;
+    }
+
+    public boolean updateGameRule(String id, GameRule gameRule) {
+        Integer index = null;
+        for (GameRule rule : this.getGame().getRules()) {
+            if (rule.getId().equals(id)) {
+                index = this.getGame().getRules().indexOf(rule);
+            }
+        }
+        if (null != index) {
+            this.getGame().getRules().set(index, gameRule);
+            return true;
+        }
+        this.getGame().getRules().add(gameRule);
+        return true;
+    }
+
+    public GameRule getGameRule(String id) {
+        for (GameRule rule : this.getGame().getRules()) {
+            if (rule.getId().equals(id)) {
+                return rule;
+            }
+        }
+        return null;
     }
 
 }

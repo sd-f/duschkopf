@@ -18,10 +18,12 @@ package at.tugraz.eegs.bge.rest.ressources;
 
 import at.tugraz.eegs.bge.business.Game;
 import at.tugraz.eegs.bge.business.GameObject;
+import at.tugraz.eegs.bge.business.GameRule;
 import at.tugraz.eegs.bge.business.services.GameControllerImpl;
 import at.tugraz.eegs.bge.business.x3d.Scene;
 import at.tugraz.eegs.bge.business.x3d.Shape;
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ws.rs.Consumes;
@@ -30,6 +32,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -111,6 +114,53 @@ public class GameRessource implements Serializable {
     public Response setGameObject(GameObject gameObject) {
         ResponseBuilder rb = Response.status(Status.NOT_FOUND);
         if (gameController.updateGameObjectAttributes(gameObject)) {
+            rb = Response.status(Status.OK);
+        }
+        return rb.build();
+    }
+
+    @GET
+    @Path("/rules")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<GameRule> getGameRules() {
+        return gameController.getGame().getRules();
+    }
+
+    @GET
+    @Path("/rule/{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public GameRule getGameRule(@PathParam("id") String id) {
+        return gameController.getGameRule(id);
+    }
+
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("/rule/{id}/save")
+    public Response setGameRule(@PathParam("id") String id, GameRule gameRule) {
+        ResponseBuilder rb = Response.status(Status.NOT_FOUND);
+        if (gameController.updateGameRule(id, gameRule)) {
+            rb = Response.status(Status.OK);
+        }
+        return rb.build();
+    }
+
+    @POST
+    //@Consumes({MediaType.APPLICATION_JSON})
+    @Path("/rule/{id}/remove")
+    public Response removeGameRule(@PathParam("id") String id) {
+        ResponseBuilder rb = Response.status(Status.NOT_FOUND);
+        if (gameController.removeGameRule(id)) {
+            rb = Response.status(Status.OK);
+        }
+        return rb.build();
+    }
+
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("/rule/new")
+    public Response addGameRule(GameRule gameRule) {
+        ResponseBuilder rb = Response.status(Status.NOT_FOUND);
+        if (gameController.updateGameRule(gameRule.getId(), gameRule)) {
             rb = Response.status(Status.OK);
         }
         return rb.build();

@@ -1,24 +1,29 @@
 package at.tugraz.eegs.bge.business;
 
 import java.io.Serializable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Lucas Reeh <lreeh@tugraz.at>
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
 public class GameRuleCondition implements Serializable {
 
-  private String id;
+    private String id;
 
-  public GameRuleCondition() {
-  }
+    public GameRuleCondition() {
+    }
 
-  public String getId() {
-    return id;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
 }

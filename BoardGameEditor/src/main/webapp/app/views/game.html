@@ -1,48 +1,70 @@
 <div ng-controller="GameController">
-    <div>
-        <h1>Game {{game.id}}</h1>
-        <div>
-            <div class="buttonbar">
-                <a ng-href="#/game/edit" class="button-link">
-                    <button type="button" class="btn" >
-                        <span class="glyphicon glyphicon-pencil"></span> Edit Game
-                    </button>
-                </a>
-            </div>
-            <div class="buttonbar">
-                <a ng-href="#/game/newobject" class="button-link">
-                    <button type="button" class="btn" >
-                        <span class="glyphicon glyphicon-plus"></span> Add Game-Object
-                    </button>
-                </a>
-            </div>
-            <div class="buttonbar">
-                <a ng-href="#/game/rules" class="button-link">
-                    <button type="button" class="btn">
-                        <span class="glyphicon glyphicon-random"></span> Rules
-                    </button>
-                </a>
-            </div>
-            <div class="buttonbar">
-                <button type="button" class="btn" ng-click="newGame();">
-                    <span class="glyphicon glyphicon-asterisk"></span> New Game
-                </button>
-            </div>
-            <div class="buttonbar">
-                <button type="button" class="btn" ng-click="newTestdata();">
-                    <span class="glyphicon glyphicon-glass"></span> Insert Test-Data
-                </button>
-            </div>
-        </div>
-        <div class="content" ng-repeat="obj in objs">
-            <div class="gameObjects">[{{obj.id}}]
-                <a ng-href="#/game/object/{{obj.id}}">{{obj.name}}</a>
-                <button type="button" class="btn btn-danger button-link" ng-click="removeObject(obj.id);">
-                    <span class="glyphicon glyphicon-remove"></span> Remove
-                </button>
-            </div>
-        </div>
-        <div class="content" ng-hide="objs.length">No Game-Objects found</div>
+    <div class="page-header well-sm">
+        <h1>{{game.name}}<small> game</small></h1>
     </div>
-
+    <div class="btn-toolbar well-sm" role="toolbar">
+        <div class="btn-group">
+            <a ng-href="#/game/edit" class="button-link">
+                <button type="button" class="btn" >
+                    <span class="glyphicon glyphicon-pencil"></span> Edit Game
+                </button>
+            </a>
+        </div>
+        <div class="btn-group">
+            <a ng-href="#/game/rules" class="button-link">
+                <button type="button" class="btn">
+                    <span class="glyphicon glyphicon-random"></span> Rules
+                </button>
+            </a>
+        </div>
+        <div class="btn-group">
+            <a ng-href="#/game/newobject" class="button-link">
+                <button type="button" class="btn" >
+                    <span class="glyphicon glyphicon-plus"></span> Add Game-Object
+                </button>
+            </a>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn" ng-click="newGame();">
+                <span class="glyphicon glyphicon-asterisk"></span> New Game
+            </button>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn" ng-click="newTestdata();">
+                <span class="glyphicon glyphicon-glass"></span> Insert Test-Data
+            </button>
+        </div>
+    </div>
+    <div class="panel panel-default well-sm">
+        <div class="panel-heading">Game Objects</div>
+        <div class="panel-body">
+            <ul class="list-group" ng-repeat="obj in objs">
+                <li class="list-group-item">[{{obj.id}}]
+                    <a ng-href="#/game/object/{{obj.id}}">{{obj.name}}</a>
+                    <span class="pull-right">
+                        <button type="button" class="btn btn-danger button-link" ng-click="removeObject(obj.id);">
+                            <span class="glyphicon glyphicon-remove"></span> Remove
+                        </button>
+                    </span>
+                </li>
+            </ul>
+            <div class="content" ng-hide="objs.length">No Game-Objects found</div>
+        </div>
+    </div>
+    <div class="panel panel-default well-sm">
+        <div class="panel-heading">Board</div>
+        <div class="panel-body" >
+            <div width="600px" height="400px">
+                <X3D version="3.0"
+                     profile="Immersive"
+                     xmlns="http://www.x3dom.org/x3dom"
+                     xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
+                     xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.0.xsd"
+                     width="600" height="400px">
+                    <scene id="scene">
+                    </scene>
+                </X3D>
+            </div>
+        </div>
+    </div>
 </div>

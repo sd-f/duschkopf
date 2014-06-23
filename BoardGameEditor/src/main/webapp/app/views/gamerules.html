@@ -1,0 +1,43 @@
+<div ng-controller="GameRulesController">
+    <div class="page-header well-sm">
+        <h1>{{game.name}}<small> rules</small></h1>
+    </div>
+    <div class="btn-toolbar well-sm" role="toolbar">
+        <div class="btn-group">
+            <a ng-href="#/game/rule/new" class="button-link">
+                <button type="button" class="btn" >
+                    <span class="glyphicon glyphicon-plus"></span> Add Rule
+                </button>
+            </a>
+        </div>
+    </div>
+    <div class="panel panel-default well-sm">
+        <div class="panel-heading">Rules</div>
+        <div class="panel-body">
+            <ul class="list-group" ng-repeat="obj in rules">
+                <li class="list-group-item">[{{obj.id}}] {{obj.name}}
+                    <span class="pull-right">
+                        <a ng-href="#/game/rule/{{obj.id}}/edit" class="button-link">
+                            <button type="button" class="btn btn-warning button-link">
+                                <span class="glyphicon glyphicon-pencil"></span> Edit
+                            </button>
+                        </a>
+                        <button type="button" class="btn btn-danger button-link" ng-click="removeRule(obj.id);">
+                            <span class="glyphicon glyphicon-remove"></span> Remove
+                        </button>
+                    </span>
+                </li>
+            </ul>
+            <div class="content" ng-hide="rules.length">No Rules found</div>
+        </div>
+        <div class="btn-toolbar well-sm" role="toolbar">
+            <div class="btn-group">
+                <a ng-href="#/game" class="button-link">
+                    <button type="button" class="btn">
+                        <span class="glyphicon glyphicon-arrow-left"></span> Back
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

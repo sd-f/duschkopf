@@ -1,20 +1,25 @@
 <div ng-controller="GameObjectController">
-    <div ng-model="gameObject">
-        <h1><a ng-href="#/game">Game</a> Object {{gameObject.name}} XML</h1>
-        <div>
-            <label for="xml">XML</label><textarea cols="100" rows="20" id="name" ng-model="gameObjectXML"/>
+    <div class="page-header well-sm">
+        <h1>{{gameObject.name}}<small> edit object XML</small></h1>
+    </div>
+    <div class="panel panel-default well-sm">
+        <div class="panel-body">
+            <div class="input-group well-sm">
+                <span class="input-group-addon">XML</span>
+                <textarea cols="100" rows="20" class="form-control" id="xml" ng-model="gameObjectXML"></textarea>
+            </div>
         </div>
     </div>
-    <div>
-        <div class="buttonbar">
+    <div class="btn-toolbar well-sm" role="toolbar">
+        <div class="btn-group">
             <button ng-click="saveGameObjectXML();" type="button" class="btn btn-success">
                 <span class="glyphicon glyphicon-ok"></span> Save
             </button>
         </div>
-        <div class="buttonbar">
+        <div class="btn-group">
             <a ng-href="#/game/object/{{gameObject.id}}" class="button-link">
-                <button type="button" class="btn" >
-                    Cancel
+                <button type="button" class="btn">
+                    <span class="glyphicon glyphicon-arrow-left"></span> Cancel
                 </button>
             </a>
         </div>
