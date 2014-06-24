@@ -116,15 +116,15 @@ public class Game {
 
         Transform lightTransform = new Transform();
         lightTransform.setDEF("Lamp_TRANSFORM");
-        lightTransform.setTranslation("-4.076245 5.903862 1.005454");
+        lightTransform.setTranslation("-15.0 20.0 5.0");
         lightTransform.setScale("1.000000 1.000000 1.000000");
-        lightTransform.setRotation("-0.498084 -0.762016 -0.413815 1.513875");
+        lightTransform.setRotation("-0.5 -0.7 -0.5 1.5");
 
         PointLight pointLight = new PointLight();
         pointLight.setDEF("LA_Lamp");
         pointLight.setAmbientIntensity(new Float("0.0000"));
         pointLight.setColor("1.0000 1.0000 1.0000");
-        pointLight.setRadius(new Float("30.0000"));
+        pointLight.setRadius(new Float("50.0000"));
         pointLight.setLocation("-0.0000 -0.0000 0.0000");
 
         lightTransform.getBackgroundOrColorInterpolatorOrCoordinateInterpolator().add(pointLight);
@@ -132,14 +132,14 @@ public class Game {
         scene.getMetadataDoubleOrMetadataFloatOrMetadataInteger().add(lightTransform);
 
         Transform cameraTransform = new Transform();
-        cameraTransform.setDEF("Lamp_TRANSFORM");
-        cameraTransform.setTranslation("-4.076245 5.903862 1.005454");
-        cameraTransform.setScale("1.000000 1.000000 1.000000");
-        cameraTransform.setRotation("-0.498084 -0.762016 -0.413815 1.513875");
+        cameraTransform.setDEF("Camera_TRANSFORM");
+        cameraTransform.setTranslation("-30 30 -30");
+        cameraTransform.setScale("1 1 1");
+        cameraTransform.setRotation("-0.093039 -0.968741 -0.229967 2.347036");
 
         Viewpoint viewPoint = new Viewpoint();
         viewPoint.setCenterOfRotation("0 0 0");
-        viewPoint.setPosition("0.00 0.00 -0.00");
+        viewPoint.setPosition("-0.00 0.00 -0.00");
         viewPoint.setOrientation("-0.92 0.35 0.17 0.00");
         viewPoint.setFieldOfView(new Float("0.858"));
 

@@ -19,7 +19,12 @@ package at.tugraz.eegs.bge.business.services;
 import at.tugraz.eegs.bge.business.Game;
 import at.tugraz.eegs.bge.business.GameObject;
 import at.tugraz.eegs.bge.business.GameRule;
+import at.tugraz.eegs.bge.business.x3d.Appearance;
+import at.tugraz.eegs.bge.business.x3d.Box;
+import at.tugraz.eegs.bge.business.x3d.Cylinder;
+import at.tugraz.eegs.bge.business.x3d.Material;
 import at.tugraz.eegs.bge.business.x3d.Shape;
+import at.tugraz.eegs.bge.business.x3d.Sphere;
 import java.io.Serializable;
 import java.text.RuleBasedCollator;
 import javax.annotation.PostConstruct;
@@ -90,13 +95,45 @@ public class GameControllerImpl implements Serializable {
         this.game.getGameObjects().get(0).getPosition().setY(0.0);
         this.game.getGameObjects().get(0).setId("LAUFER1");
 
+        Shape shape = new Shape();
+        Appearance appearance = new Appearance();
+        shape.getRest().add(appearance);
+        // grün
+        Material material = new Material();
+        material.setDiffuseColor(".2 .8 .2");
+        material.setSpecularColor("0.401 0.401 0.401");
+        material.setEmissiveColor("0.000 0.000 0.000");
+        material.setAmbientIntensity(new Float("0.333"));
+        material.setShininess(new Float("0.098"));
+        material.setTransparency(new Float("0.0"));
+        appearance.getAppearanceChildContentModel().add(material);
+        Cylinder cylinder = new Cylinder();
+
+        shape.getRest().add(cylinder);
+        this.game.getGameObjects().get(0).setShape(shape);
+
         this.game.addPiece(new GameObject("Zweiter Läufer"));
         this.game.getGameObjects().get(1).getPosition().setY(3.0);
         this.game.getGameObjects().get(1).setId("LAUFER2");
 
+        shape = new Shape();
+        shape.getRest().add(appearance);
+        appearance.getAppearanceChildContentModel().add(material);
+        Sphere sphere = new Sphere();
+
+        shape.getRest().add(sphere);
+        this.game.getGameObjects().get(1).setShape(shape);
+
         this.game.addPiece(new GameObject("Erster Bauer"));
         this.game.getGameObjects().get(2).getPosition().setY(-3.0);
         this.game.getGameObjects().get(2).setId("PAWN1");
+
+        shape = new Shape();
+        shape.getRest().add(appearance);
+        appearance.getAppearanceChildContentModel().add(material);
+        Box box = new Box();
+        shape.getRest().add(box);
+        this.game.getGameObjects().get(2).setShape(shape);
 
         this.game.getRules().add(new GameRule());
         this.game.getRules().get(0).setId("INIT");

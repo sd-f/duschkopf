@@ -51,29 +51,6 @@ public class GameObject {
 
     public GameObject(String name) {
         this.name = name;
-
-        // TODO replace with uploadable abstract class
-        this.shape = new Shape();
-        Appearance appearance = new Appearance();
-
-        this.shape.getRest().add(appearance);
-
-        Material material = new Material();
-
-        material.setDiffuseColor(".2 .8 .2");
-        material.setSpecularColor("0.401 0.401 0.401");
-        material.setEmissiveColor("0.000 0.000 0.000");
-        material.setAmbientIntensity(new Float("0.333"));
-        material.setShininess(new Float("0.098"));
-        material.setTransparency(new Float("0.0"));
-
-        appearance.getAppearanceChildContentModel().add(material);
-
-        // todo replace all
-        Cylinder cylinder = new Cylinder();
-
-        this.shape.getRest().add(cylinder);
-
     }
 
     @Transient
