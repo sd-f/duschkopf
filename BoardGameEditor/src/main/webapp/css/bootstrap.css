@@ -15,9 +15,12 @@ html {
 
 
 <! add some style for http://bootswatch.com/cyborg/>
-box {
-	padding: 20px;
-	
+
+<! does nothing yet>
+.gameEditorView {
+    margin-left: auto;
+    margin-right: auto;
+    width: 6em;
 }
 .btn-mybuttons{
   background-color: #060606;
@@ -41,6 +44,8 @@ box {
   user-select: none;
 	
 }
+
+
 body {
   margin: 0;
 }
@@ -798,10 +803,12 @@ pre code {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  float: right;
 }
 .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
   float: left;
 }
+
 .col-xs-12 {
   width: 100%;
 }

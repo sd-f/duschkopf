@@ -2,6 +2,7 @@
     <div class="page-header well-sm">
         <h1>{{game.name}} Create your own Board Game</h1>
     </div>
+    
     <div class="btn-toolbar well-sm" role="toolbar">
         <div class="btn-group">
             <button type="button" class="btn-mybuttons" ng-click="newGame();">
@@ -34,38 +35,49 @@
                 </button>
             </a>
         </div>
+	</div>
 
-    </div>
-    <div class="panel panel-default well-sm">
-        <div class="panel-heading">Game Objects</div>
-        <div class="panel-body">
-            <ul class="list-group" ng-repeat="obj in objs">
-                <li class="list-group-item">[{{obj.id}}]
-                    <a ng-href="#/game/object/{{obj.id}}">{{obj.name}}</a>
-                    <span class="pull-right">
-                        <button type="button" class="btn btn-danger button-link" ng-click="removeObject(obj.id);">
-                            <span class="glyphicon glyphicon-remove"></span> Remove
-                        </button>
-                    </span>
-                </li>
-            </ul>
-            <div class="content" ng-hide="objs.length">No Game-Objects found</div>
-        </div>
-    </div>
-    <div class="panel panel-default well-sm">
-        <div class="panel-heading">Board</div>
-        <div class="panel-body" >
-            <div width="600px" height="400px">
-                <X3D version="3.0"
-                     profile="Immersive"
-                     xmlns="http://www.x3dom.org/x3dom"
-                     xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-                     xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.0.xsd"
-                     width="600" height="400px">
-                    <scene id="scene">
-                    </scene>
-                </X3D>
-            </div>
-        </div>
-    </div>
+	<div class="container-fluid">
+		 <div class="row">
+				<div class="col-xs-3">    
+				    <div class="panel panel-default well-sm">
+				        <div class="panel-heading">Game Objects</div>
+				        <div class="panel-body">
+				            <ul class="list-group" ng-repeat="obj in objs">
+				                <li class="list-group-item">[{{obj.id}}]
+				                    <a ng-href="#/game/object/{{obj.id}}">{{obj.name}}</a>
+				                    <span class="pull-right">
+				                        <button type="button" class="btn btn-danger button-link" ng-click="removeObject(obj.id);">
+				                            <span class="glyphicon glyphicon-trash"></span>
+				                        </button>
+				                    </span>
+				                </li>
+				            </ul>
+					        <div class="content" ng-hide="objs.length">No Game-Objects found</div>
+						</div>
+					</div>
+				</div>  
+			
+			
+		    <div class="col-md-6">
+			     <div class="panel panel-default well-sm">
+			        <div class="panel-heading">Board</div>
+			        <div class="panel-body" >
+			            <div width="600px" height="400px">
+			                <X3D version="3.0"
+			                     profile="Immersive"
+			                     xmlns="http://www.x3dom.org/x3dom"
+			                     xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
+			                     xsd:noNamespaceSchemaLocation="http://www.web3d.org/specifications/x3d-3.0.xsd"
+			                     width="600" height="400px">
+			                    <scene id="scene">
+			                    </scene>
+			                </X3D>
+			            </div>
+			        </div>
+			    </div>
+		   </div>
+		</div>
+	</div>
+    
 </div>
