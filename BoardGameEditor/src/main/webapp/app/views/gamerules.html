@@ -4,8 +4,8 @@
     </div>
     <div class="btn-toolbar well-sm" role="toolbar">
         <div class="btn-group">
-            <a ng-href="#/game/rule/new" class="button-link">
-                <button type="button" class="btn" >
+            <a ng-href="#/game/rule/new" class="btn-group">
+                <button type="button" class="btn-mybuttons-2" >
                     <span class="glyphicon glyphicon-plus"></span> Add Rule
                 </button>
             </a>
@@ -23,21 +23,24 @@
                             </button>
                         </a>
                         <button type="button" class="btn btn-danger button-link" ng-click="removeRule(obj.id);">
-                            <span class="glyphicon glyphicon-remove"></span> Remove
+                            <span class="glyphicon glyphicon-trash"></span>
                         </button>
                     </span>
                 </li>
             </ul>
             <div class="content" ng-hide="rules.length">No Rules found</div>
         </div>
+        
+        </div>
+        
         <div class="btn-toolbar well-sm" role="toolbar">
             <div class="btn-group">
-                <a ng-href="#/game" class="button-link">
-                    <button type="button" class="btn">
+                <a ng-href="#/game" class="btn-group">
+                    <button type="button" class="btn-mybuttons-2">
                         <span class="glyphicon glyphicon-arrow-left"></span> Back
                     </button>
                 </a>
             </div>
         </div>
-    </div>
+    
 </div>
