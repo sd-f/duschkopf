@@ -16,61 +16,70 @@
  */
 
 app.controller("GameRulesController", function($scope, gameRulesFactory, $location) {
-    $scope.rules = [];
+  $scope.rules = [];
 
-    var init = function() {
-        gameRulesFactory.getGameRules().success(function(data) {
-            //updateRules($scope, data);
-            $scope.rules = data.gameRule;
-        });
-    };
-    init();
-    $scope.removeRule = function(id)
-    {
-        gameRulesFactory.removeGameRule(id).success(function() {
-            $location.path("/game/rules");
-        });
-    };
+  var init = function() {
+    gameRulesFactory.getGameRules().success(function(data) {
+      //updateRules($scope, data);
+      $scope.rules = data.gameRule;
+    });
+  };
+  init();
+  $scope.removeRule = function(id)
+  {
+    gameRulesFactory.removeGameRule(id).success(function() {
+      $location.path("/game/rules");
+    });
+  };
 
 });
 app.factory('gameRulesFactory', function($http) {
-    var factory = {};
-    factory.getGameRules = function() {
-        return $http.get("rest/game/rules");
-    };
-    factory.removeGameRule = function(id) {
-        return $http.post("rest/game/rule/" + id + "/remove", data = '', {headers: {'Content-Type': 'application/json'}});
-    };
-    return factory;
+  var factory = {};
+  factory.getGameRules = function() {
+    return $http.get("rest/game/rules");
+  };
+  factory.removeGameRule = function(id) {
+    return $http.post("rest/game/rule/" + id + "/remove", data = '', {headers: {'Content-Type': 'application/json'}});
+  };
+  return factory;
 });
+
+
+var bla;
 
 app.controller("GameRuleController", function($scope, $routeParams, $location, gameRuleFactory) {
 
-    var init = function() {
-        gameRuleFactory.getGameRule($routeParams.id).success(function(data) {
-            $scope.gameRule = data.gameRule;
-        });
-    };
-    init();
-    $scope.saveGameRule = function()
-    {
-        gameRuleFactory.saveGameRule($routeParams.id, $scope.gameRule).success(function() {
-            $location.path("/game/rules");
-        });
-    };
+  $scope.conditions = [];
+  $scope.actions = [];
+
+  var init = function() {
+    gameRuleFactory.getGameRule($routeParams.id).success(function(data) {
+      $scope.gameRule = data.gameRule;
+      $scope.conditions = $scope.gameRule.conditions;
+      $scope.actions = $scope.gameRule.actions;
+      bla = $scope.actions;
+    });
+  };
+  init();
+  $scope.saveGameRule = function()
+  {
+    gameRuleFactory.saveGameRule($routeParams.id, $scope.gameRule).success(function() {
+      $location.path("/game/rules");
+    });
+  };
 
 });
 app.factory('gameRuleFactory', function($http) {
-    var factory = {};
-    factory.getGameRule = function(id) {
-        return $http.get("rest/game/rule/" + id);
-    };
-    factory.saveGameRule = function(id, gameRule) {
-        return $http.post(
-                "rest/game/rule/" + id + "/save",
-                data = {gameRule: gameRule},
-        {headers: {'Content-Type': 'application/json'}}
-        );
-    };
-    return factory;
+  var factory = {};
+  factory.getGameRule = function(id) {
+    return $http.get("rest/game/rule/" + id);
+  };
+  factory.saveGameRule = function(id, gameRule) {
+    return $http.post(
+        "rest/game/rule/" + id + "/save",
+        data = {gameRule: gameRule},
+    {headers: {'Content-Type': 'application/json'}}
+    );
+  };
+  return factory;
 });

@@ -16,21 +16,28 @@
  */
 package at.tugraz.eegs.bge.business.services;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.Stateful;
+import javax.enterprise.inject.Any;
+
 import at.tugraz.eegs.bge.business.Game;
 import at.tugraz.eegs.bge.business.GameAction;
 import at.tugraz.eegs.bge.business.GameObject;
 import at.tugraz.eegs.bge.business.GameRule;
+import at.tugraz.eegs.bge.business.GameRuleCondition;
+import at.tugraz.eegs.bge.business.actions.Action;
+import at.tugraz.eegs.bge.business.actions.ActionSetObjectState;
+import at.tugraz.eegs.bge.business.actions.ActionShowMessage;
 import at.tugraz.eegs.bge.business.x3d.Appearance;
 import at.tugraz.eegs.bge.business.x3d.Box;
 import at.tugraz.eegs.bge.business.x3d.Cylinder;
 import at.tugraz.eegs.bge.business.x3d.Material;
 import at.tugraz.eegs.bge.business.x3d.Shape;
 import at.tugraz.eegs.bge.business.x3d.Sphere;
-import java.io.Serializable;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.ejb.Stateful;
-import javax.enterprise.inject.Any;
 
 /**
  *
@@ -39,167 +46,191 @@ import javax.enterprise.inject.Any;
 @Stateful
 public class GameControllerImpl implements Serializable {
 
-    private Game game;
+  private Game game;
 
-    @Any
-    private List<GameAction> gameActions;
+  @Any
+  private List<Action> gameActions;
 
-    @PostConstruct
-    public void init() {
-        this.game = new Game();
-    }
+  @PostConstruct
+  public void init() {
+    this.game = new Game();
+  }
 
-    public Game getGame() {
-        return game;
-    }
+  public Game getGame() {
+    return game;
+  }
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
+  public void setGame(Game game) {
+    this.game = game;
+  }
 
-    public List<GameAction> getAllActions() {
-        return gameActions;
-    }
+  public List<Action> getAllActions() {
+    gameActions = new ArrayList<Action>();
+    gameActions.add(new ActionShowMessage());
+    gameActions.add(new ActionSetObjectState());
+    return gameActions;
+  }
 
-    public void addGameObject(GameObject gameObject) {
-        this.getGame().getGameObjects().add(gameObject);
-    }
+  public void addGameObject(GameObject gameObject) {
+    this.getGame().getGameObjects().add(gameObject);
+  }
 
-    public Boolean updateGameObjectAttributes(GameObject gameObject) {
-        for (GameObject gameObjectItem : this.getGame().getGameObjects()) {
-            if (gameObjectItem.getId().equals(gameObject.getId())) {
-                gameObjectItem.updateAttributes(gameObject);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public Boolean removeGameObject(String id) {
-        GameObject toDelete = null;
-        for (GameObject gameObjectItem : this.getGame().getGameObjects()) {
-            if (gameObjectItem.getId().equals(id)) {
-                toDelete = gameObjectItem;
-            }
-        }
-        if (null != toDelete) {
-            this.getGame().getGameObjects().remove(toDelete);
-            return true;
-        }
-        return false;
-    }
-
-    public void reset() {
-        this.setGame(new Game());
-    }
-
-    public void insertTestdata() {
-
-        this.game = new Game();
-
-        this.game.setId("FIRSTGAME");
-        this.game.setName("Erstes Spiel");
-
-        this.game.addPiece(new GameObject("Erster Läufer"));
-        this.game.getGameObjects().get(0).getPosition().setY(0.0);
-        this.game.getGameObjects().get(0).setId("LAUFER1");
-
-        Shape shape = new Shape();
-        Appearance appearance = new Appearance();
-        shape.getRest().add(appearance);
-        // grün
-        Material material = new Material();
-        material.setDiffuseColor(".2 .8 .2");
-        material.setSpecularColor("0.401 0.401 0.401");
-        material.setEmissiveColor("0.000 0.000 0.000");
-        material.setAmbientIntensity(new Float("0.333"));
-        material.setShininess(new Float("0.098"));
-        material.setTransparency(new Float("0.0"));
-        appearance.getAppearanceChildContentModel().add(material);
-        Cylinder cylinder = new Cylinder();
-
-        shape.getRest().add(cylinder);
-        this.game.getGameObjects().get(0).setShape(shape);
-
-        this.game.addPiece(new GameObject("Zweiter Läufer"));
-        this.game.getGameObjects().get(1).getPosition().setY(3.0);
-        this.game.getGameObjects().get(1).setId("LAUFER2");
-
-        shape = new Shape();
-        shape.getRest().add(appearance);
-        appearance.getAppearanceChildContentModel().add(material);
-        Sphere sphere = new Sphere();
-
-        shape.getRest().add(sphere);
-        this.game.getGameObjects().get(1).setShape(shape);
-
-        this.game.addPiece(new GameObject("Erster Bauer"));
-        this.game.getGameObjects().get(2).getPosition().setY(-3.0);
-        this.game.getGameObjects().get(2).setId("PAWN1");
-
-        shape = new Shape();
-        shape.getRest().add(appearance);
-        appearance.getAppearanceChildContentModel().add(material);
-        Box box = new Box();
-        shape.getRest().add(box);
-        this.game.getGameObjects().get(2).setShape(shape);
-
-        this.game.getRules().add(new GameRule());
-        this.game.getRules().get(0).setId("INIT");
-        this.game.getRules().get(0).setName("Spielfiguren aufstellen");
-
-        this.game.getRules().add(new GameRule());
-        this.game.getRules().get(1).setId("FIRSTDRAW");
-        this.game.getRules().get(1).setName("Erster Zug");
-
-    }
-
-    public Boolean updateGameObjectShape(String id, Shape shape) {
-        for (GameObject gameObjectItem : this.getGame().getGameObjects()) {
-            if (gameObjectItem.getId().equals(id)) {
-                gameObjectItem.setShape(shape);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean removeGameRule(String id) {
-        Integer index = null;
-        for (GameRule rule : this.getGame().getRules()) {
-            if (rule.getId().equals(id)) {
-                index = this.getGame().getRules().indexOf(rule);
-            }
-        }
-        if (null != index) {
-            this.getGame().getRules().remove(index.intValue());
-            return true;
-        }
-        return false;
-    }
-
-    public boolean updateGameRule(String id, GameRule gameRule) {
-        Integer index = null;
-        for (GameRule rule : this.getGame().getRules()) {
-            if (rule.getId().equals(id)) {
-                index = this.getGame().getRules().indexOf(rule);
-            }
-        }
-        if (null != index) {
-            this.getGame().getRules().set(index, gameRule);
-            return true;
-        }
-        this.getGame().getRules().add(gameRule);
+  public Boolean updateGameObjectAttributes(GameObject gameObject) {
+    for (GameObject gameObjectItem : this.getGame().getGameObjects()) {
+      if (gameObjectItem.getId().equals(gameObject.getId())) {
+        gameObjectItem.updateAttributes(gameObject);
         return true;
+      }
     }
+    return false;
+  }
 
-    public GameRule getGameRule(String id) {
-        for (GameRule rule : this.getGame().getRules()) {
-            if (rule.getId().equals(id)) {
-                return rule;
-            }
-        }
-        return null;
+  public Boolean removeGameObject(String id) {
+    GameObject toDelete = null;
+    for (GameObject gameObjectItem : this.getGame().getGameObjects()) {
+      if (gameObjectItem.getId().equals(id)) {
+        toDelete = gameObjectItem;
+      }
     }
+    if (null != toDelete) {
+      this.getGame().getGameObjects().remove(toDelete);
+      return true;
+    }
+    return false;
+  }
+
+  public void reset() {
+    this.setGame(new Game());
+  }
+
+  public void insertTestdata() {
+
+    this.game = new Game();
+
+    this.game.setId("FIRSTGAME");
+    this.game.setName("Erstes Spiel");
+
+    this.game.addPiece(new GameObject("Erster Läufer"));
+    this.game.getGameObjects().get(0).getPosition().setY(0.0);
+    this.game.getGameObjects().get(0).setId("LAUFER1");
+
+    Shape shape = new Shape();
+    Appearance appearance = new Appearance();
+    shape.getRest().add(appearance);
+    // grün
+    Material material = new Material();
+    material.setDiffuseColor(".2 .8 .2");
+    material.setSpecularColor("0.401 0.401 0.401");
+    material.setEmissiveColor("0.000 0.000 0.000");
+    material.setAmbientIntensity(new Float("0.333"));
+    material.setShininess(new Float("0.098"));
+    material.setTransparency(new Float("0.0"));
+    appearance.getAppearanceChildContentModel().add(material);
+    Cylinder cylinder = new Cylinder();
+
+    shape.getRest().add(cylinder);
+    this.game.getGameObjects().get(0).setShape(shape);
+
+    this.game.addPiece(new GameObject("Zweiter Läufer"));
+    this.game.getGameObjects().get(1).getPosition().setY(3.0);
+    this.game.getGameObjects().get(1).setId("LAUFER2");
+
+    shape = new Shape();
+    shape.getRest().add(appearance);
+    appearance.getAppearanceChildContentModel().add(material);
+    Sphere sphere = new Sphere();
+
+    shape.getRest().add(sphere);
+    this.game.getGameObjects().get(1).setShape(shape);
+
+    this.game.addPiece(new GameObject("Erster Bauer"));
+    this.game.getGameObjects().get(2).getPosition().setY(-3.0);
+    this.game.getGameObjects().get(2).setId("PAWN1");
+
+    shape = new Shape();
+    shape.getRest().add(appearance);
+    appearance.getAppearanceChildContentModel().add(material);
+    Box box = new Box();
+    shape.getRest().add(box);
+    this.game.getGameObjects().get(2).setShape(shape);
+
+    this.game.getRules().add(new GameRule());
+    this.game.getRules().get(0).setId("INIT");
+    this.game.getRules().get(0).setName("Spielfiguren aufstellen");
+
+    this.game.getRules().add(new GameRule());
+    this.game.getRules().get(1).setId("FIRSTDRAW");
+    this.game.getRules().get(1).setName("Erster Zug");
+
+    GameRuleCondition cd1 = new GameRuleCondition();
+    cd1.setId("P1I");
+    cd1.setObject(this.game.getGameObjects().get(2));
+    cd1.setState("");
+
+    ActionShowMessage action = new ActionShowMessage();
+
+    GameAction gameAction = new GameAction();
+    gameAction.setAction(action);
+    gameAction.setParameters(new ArrayList<String>());
+    gameAction.getParameters().add("Haha");
+
+    this.game.getRules().get(1).getActions().add(gameAction);
+
+    cd1 = new GameRuleCondition();
+    cd1.setId("P1I");
+    cd1.setObject(this.game.getGameObjects().get(2));
+    cd1.setState("");
+
+    this.game.getRules().get(1).getConditions().add(cd1);
+
+  }
+
+  public Boolean updateGameObjectShape(String id, Shape shape) {
+    for (GameObject gameObjectItem : this.getGame().getGameObjects()) {
+      if (gameObjectItem.getId().equals(id)) {
+        gameObjectItem.setShape(shape);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public boolean removeGameRule(String id) {
+    Integer index = null;
+    for (GameRule rule : this.getGame().getRules()) {
+      if (rule.getId().equals(id)) {
+        index = this.getGame().getRules().indexOf(rule);
+      }
+    }
+    if (null != index) {
+      this.getGame().getRules().remove(index.intValue());
+      return true;
+    }
+    return false;
+  }
+
+  public boolean updateGameRule(String id, GameRule gameRule) {
+    Integer index = null;
+    for (GameRule rule : this.getGame().getRules()) {
+      if (rule.getId().equals(id)) {
+        index = this.getGame().getRules().indexOf(rule);
+      }
+    }
+    if (null != index) {
+      this.getGame().getRules().set(index, gameRule);
+      return true;
+    }
+    this.getGame().getRules().add(gameRule);
+    return true;
+  }
+
+  public GameRule getGameRule(String id) {
+    for (GameRule rule : this.getGame().getRules()) {
+      if (rule.getId().equals(id)) {
+        return rule;
+      }
+    }
+    return null;
+  }
 
 }

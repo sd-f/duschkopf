@@ -16,19 +16,22 @@
  */
 package at.tugraz.eegs.bge.rest.ressources;
 
-import at.tugraz.eegs.bge.business.Game;
-import at.tugraz.eegs.bge.business.GameAction;
-import at.tugraz.eegs.bge.business.services.GameControllerImpl;
-import at.tugraz.eegs.bge.business.services.GameRunnerImpl;
 import java.awt.Desktop;
 import java.io.Serializable;
 import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import at.tugraz.eegs.bge.business.Game;
+import at.tugraz.eegs.bge.business.GameAction;
+import at.tugraz.eegs.bge.business.GameRun;
+import at.tugraz.eegs.bge.business.services.GameControllerImpl;
+import at.tugraz.eegs.bge.business.services.GameRunnerImpl;
 
 /**
  *
@@ -38,24 +41,26 @@ import javax.ws.rs.core.MediaType;
 @Path("/game/run")
 public class GameRunnerRessource implements Serializable {
 
-    @EJB
-    GameRunnerImpl gameRunner;
+  private static final long serialVersionUID = 1L;
 
-    @EJB
-    GameControllerImpl gameController;
+  @EJB
+  GameRunnerImpl gameRunner;
 
-    @GET
-    @Path("/start")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Game start() {
-        return gameController.getGame();
-    }
+  @EJB
+  GameControllerImpl gameController;
 
-    @GET
-    @Path("/next")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<GameAction> next() {
-        return gameController.getAllActions();
-    }
+  @GET
+  @Path("/start")
+  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+  public Game start() {
+    return gameController.getGame();
+  }
+
+  @GET
+  @Path("/next")
+  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+  public GameRun next() {
+    return new GameRun();
+  }
 
 }

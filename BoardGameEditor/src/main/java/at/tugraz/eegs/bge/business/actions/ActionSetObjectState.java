@@ -16,33 +16,49 @@
  */
 package at.tugraz.eegs.bge.business.actions;
 
-import at.tugraz.eegs.bge.business.Game;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import at.tugraz.eegs.bge.business.Game;
 
 /**
  *
  * @author Lucas Reeh <lreeh@tugraz.at>
  */
-public class ActionSetObjectState implements Action {
+@XmlRootElement(name = "action")
+//@XmlAccessorType(XmlAccessType.PUBLIC_MEMBER)
+public class ActionSetObjectState extends ActionPlugin implements Action {
 
-    public Game execute(Game game, List<String> parameters) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+  public String id2 = "Test";
 
-    public String getId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+  public ActionSetObjectState() {
+  }
 
-    public String getName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+  public Game execute(Game game, List<String> parameters) {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
 
-    public String getDescription() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+  public String getId() {
+    return "SET_OBJECT_STATE";
+  }
 
-    public Boolean isServerSide() {
-        return true;
-    }
+  public String getName() {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+
+  public String getDescription() {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+
+  public Boolean isServerSide() {
+    return true;
+  }
+
+  public String getType() {
+    return ActionTypes.TELL.toString();
+  }
 
 }

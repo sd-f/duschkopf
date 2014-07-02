@@ -15,6 +15,35 @@
             </div>
         </div>
     </div>
+
+    <div class="panel panel-default well-sm">
+        <div class="panel-heading">Conditions</div>
+        <div class="panel-body">
+            <ul class="list-group" ng-repeat="ruleCondition in conditions">
+                <li class="list-group-item">[{{ruleCondition.id}}] {{ruleCondition.object.id}} - in State: {{ruleCondition.object.state}}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel panel-default well-sm">
+        <div class="panel-heading">Actions</div>
+        <div class="panel-body">
+            <div class="panel-body">
+                <ul class="list-group" ng-repeat="ruleAction in actions">
+                    <li class="list-group-item">[{{ruleAction.id}}] {{ruleAction}}
+                    </li>
+                </ul>
+                <div class="input-group well-sm">
+                    <span class="input-group-addon">Type</span>
+                    <input type="text" class="form-control" id="ruleAction{{ruleAction.id}}name" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="btn-toolbar well-sm" role="toolbar">
         <div class="btn-group">
             <button ng-click="saveGameRule();" type="button" class="btn btn-success">

@@ -22,9 +22,10 @@ import at.tugraz.eegs.bge.business.GameObject;
 import at.tugraz.eegs.bge.business.GameRule;
 import at.tugraz.eegs.bge.business.GameRuleCondition;
 import at.tugraz.eegs.bge.business.GameRun;
-import at.tugraz.eegs.bge.business.actions.Action;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.ejb.Stateful;
 
 /**
@@ -34,58 +35,58 @@ import javax.ejb.Stateful;
 @Stateful
 public class GameRunnerImpl {
 
-    Game game;
+  Game game;
 
-    public void setGame(Game game) {
-        this.game = game;
+  public void setGame(Game game) {
+    this.game = game;
+  }
+
+  /**
+   * Laufzeit ist mies
+   * <p>
+   * @param gameRuleConditions
+   * @return
+   */
+  private Boolean checkAllConditions(List<GameRuleCondition> gameRuleConditions) {
+    for (GameRuleCondition condition : gameRuleConditions) {
+      GameObject object = this.game.getGameObjects().get(this.game.getGameObjects().indexOf(condition.getObject()));
+      if (!condition.isTrue(object)) {
+        return false;
+      }
     }
+    return (!gameRuleConditions.isEmpty());
+  }
 
-    /**
-     * Laufzeit ist mies
-     *
-     * @param gameRuleConditions
-     * @return
-     */
-    private Boolean checkAllConditions(List<GameRuleCondition> gameRuleConditions) {
-        for (GameRuleCondition condition : gameRuleConditions) {
-            GameObject object = this.game.getGameObjects().get(this.game.getGameObjects().indexOf(condition.getObject()));
-            if (!condition.isTrue(object)) {
-                return false;
-            }
-        }
-        return (!gameRuleConditions.isEmpty());
+  /**
+   * gibt eine Rule zurück wenn alle Conditions aufgehen
+   * <p>
+   * @return
+   */
+  private GameRule getValidRule(Game game) {
+    for (GameRule rule : game.getRules()) {
+      if (checkAllConditions(rule.getConditions())) {
+        return rule;
+      }
     }
+    return null;
+  }
 
-    /**
-     * gibt eine Rule zurück wenn alle Conditions aufgehen
-     *
-     * @return
-     */
-    private GameRule getValidRule(Game game) {
-        for (GameRule rule : game.getRules()) {
-            if (checkAllConditions(rule.getConditions())) {
-                return rule;
-            }
-        }
-        return null;
+  public GameRun next() {
+    GameRun gameRun = new GameRun();
+    gameRun.setCurrentGame(this.game);
+    List<GameAction> actions = new ArrayList<GameAction>();
+    GameRule applicableRule = this.getValidRule(this.game);
+    if (null != applicableRule) {
+      actions.addAll(applicableRule.getActions());
+      // actions ausführen
+      this.executeAllActions(actions);
     }
+    gameRun.getActions().addAll(actions);
+    return gameRun;
+  }
 
-    public GameRun next() {
-        GameRun gameRun = new GameRun();
-        gameRun.setCurrentGame(this.game);
-        List<GameAction> actions = new ArrayList<GameAction>();
-        GameRule applicableRule = this.getValidRule(this.game);
-        if (null != applicableRule) {
-            actions.addAll(applicableRule.getActions());
-            // actions ausführen
-            this.executeAllActions(actions);
-        }
-        gameRun.getActions().addAll(actions);
-        return gameRun;
-    }
+  private void executeAllActions(List<GameAction> actions) {
 
-    private void executeAllActions(List<GameAction> actions) {
-
-    }
+  }
 
 }

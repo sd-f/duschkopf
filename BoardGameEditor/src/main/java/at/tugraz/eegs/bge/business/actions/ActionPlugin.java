@@ -16,33 +16,13 @@
  */
 package at.tugraz.eegs.bge.business.actions;
 
-import java.beans.Transient;
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import at.tugraz.eegs.bge.business.Game;
 
 /**
  *
  * @author Lucas Reeh <lreeh@tugraz.at>
  */
-public interface Action {
-
-  @Transient
-  public Game execute(Game game, List<String> parameters);
-
-  public String getId();
-
-  public String getName();
-
-  public String getDescription();
-
-  public Boolean isServerSide();
-
-  public String getType();
+@XmlRootElement(name = "action")
+public abstract class ActionPlugin implements Action {
 
 }

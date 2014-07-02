@@ -16,14 +16,9 @@
  */
 package at.tugraz.eegs.bge.rest.ressources;
 
-import at.tugraz.eegs.bge.business.Game;
-import at.tugraz.eegs.bge.business.GameObject;
-import at.tugraz.eegs.bge.business.GameRule;
-import at.tugraz.eegs.bge.business.services.GameControllerImpl;
-import at.tugraz.eegs.bge.business.x3d.Scene;
-import at.tugraz.eegs.bge.business.x3d.Shape;
 import java.io.Serializable;
 import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ws.rs.Consumes;
@@ -37,6 +32,14 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
+import at.tugraz.eegs.bge.business.Game;
+import at.tugraz.eegs.bge.business.GameObject;
+import at.tugraz.eegs.bge.business.GameRule;
+import at.tugraz.eegs.bge.business.actions.Action;
+import at.tugraz.eegs.bge.business.services.GameControllerImpl;
+import at.tugraz.eegs.bge.business.x3d.Scene;
+import at.tugraz.eegs.bge.business.x3d.Shape;
+
 /**
  *
  * @author Lucas Reeh <lreeh@tugraz.at>
@@ -45,145 +48,155 @@ import javax.ws.rs.core.Response.Status;
 @Path("/game")
 public class GameRessource implements Serializable {
 
-    @EJB
-    GameControllerImpl gameController;
+  private static final long serialVersionUID = 1L;
 
-    @GET
-    @Path("/")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Game getGame() {
-        return gameController.getGame();
-    }
+  @EJB
+  GameControllerImpl gameController;
 
-    @POST
-    @Path("/save")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public Game setGame(Game game) {
-        gameController.setGame(game);
-        return gameController.getGame();
-    }
+  @GET
+  @Path("/")
+  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+  public Game getGame() {
+    return gameController.getGame();
+  }
 
-    @GET
-    @Path("/new")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Game newGame() {
-        gameController.reset();
-        return gameController.getGame();
-    }
+  @POST
+  @Path("/save")
+  @Consumes({MediaType.APPLICATION_JSON})
+  public Game setGame(Game game) {
+    gameController.setGame(game);
+    return gameController.getGame();
+  }
 
-    @GET
-    @Path("/new/testdata")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Game newTestdata() {
-        gameController.insertTestdata();
-        return gameController.getGame();
-    }
+  @GET
+  @Path("/new")
+  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+  public Game newGame() {
+    gameController.reset();
+    return gameController.getGame();
+  }
 
-    @GET
-    @Path("/object/{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public GameObject getGameObject(@PathParam("id") String id) {
-        for (GameObject gameObject : gameController.getGame().getGameObjects()) {
-            if (gameObject.getId().equals(id)) {
-                return gameObject;
-            }
-        }
-        return null;
-    }
+  @GET
+  @Path("/new/testdata")
+  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+  public Game newTestdata() {
+    gameController.insertTestdata();
+    return gameController.getGame();
+  }
 
-    @POST
-    @Path("/board/xml")
-    @Produces({MediaType.APPLICATION_XML})
-    public Scene getBoardScene() {
-        return gameController.getGame().getScene();
+  @GET
+  @Path("/object/{id}")
+  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+  public GameObject getGameObject(@PathParam("id") String id) {
+    for (GameObject gameObject : gameController.getGame().getGameObjects()) {
+      if (gameObject.getId().equals(id)) {
+        return gameObject;
+      }
     }
+    return null;
+  }
 
-    @POST
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Path("/newobject/save")
-    public Response addGameObject(GameObject gameObject) {
-        gameController.addGameObject(gameObject);
-        ResponseBuilder rb = Response.status(Status.ACCEPTED);
-        return rb.build();
-    }
+  @POST
+  @Path("/board/xml")
+  @Produces({MediaType.APPLICATION_XML})
+  public Scene getBoardScene() {
+    return gameController.getGame().getScene();
+  }
 
-    @POST
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Path("/object/{id}/save")
-    public Response setGameObject(GameObject gameObject) {
-        ResponseBuilder rb = Response.status(Status.NOT_FOUND);
-        if (gameController.updateGameObjectAttributes(gameObject)) {
-            rb = Response.status(Status.OK);
-        }
-        return rb.build();
-    }
+  @POST
+  @Consumes({MediaType.APPLICATION_JSON})
+  @Path("/newobject/save")
+  public Response addGameObject(GameObject gameObject) {
+    gameController.addGameObject(gameObject);
+    ResponseBuilder rb = Response.status(Status.ACCEPTED);
+    return rb.build();
+  }
 
-    @GET
-    @Path("/rules")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<GameRule> getGameRules() {
-        return gameController.getGame().getRules();
+  @POST
+  @Consumes({MediaType.APPLICATION_JSON})
+  @Path("/object/{id}/save")
+  public Response setGameObject(GameObject gameObject) {
+    ResponseBuilder rb = Response.status(Status.NOT_FOUND);
+    if (gameController.updateGameObjectAttributes(gameObject)) {
+      rb = Response.status(Status.OK);
     }
+    return rb.build();
+  }
 
-    @GET
-    @Path("/rule/{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public GameRule getGameRule(@PathParam("id") String id) {
-        return gameController.getGameRule(id);
-    }
+  @GET
+  @Path("/rules")
+  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+  public List<GameRule> getGameRules() {
+    return gameController.getGame().getRules();
+  }
 
-    @POST
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Path("/rule/{id}/save")
-    public Response setGameRule(@PathParam("id") String id, GameRule gameRule) {
-        ResponseBuilder rb = Response.status(Status.NOT_FOUND);
-        if (gameController.updateGameRule(id, gameRule)) {
-            rb = Response.status(Status.OK);
-        }
-        return rb.build();
-    }
+  @GET
+  @Path("/rule/{id}")
+  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+  public GameRule getGameRule(@PathParam("id") String id) {
+    return gameController.getGameRule(id);
+  }
 
-    @POST
-    //@Consumes({MediaType.APPLICATION_JSON})
-    @Path("/rule/{id}/remove")
-    public Response removeGameRule(@PathParam("id") String id) {
-        ResponseBuilder rb = Response.status(Status.NOT_FOUND);
-        if (gameController.removeGameRule(id)) {
-            rb = Response.status(Status.OK);
-        }
-        return rb.build();
-    }
+  @GET
+  @Path("/rule/actions")
+  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+  public List<Action> getAvailableActions(@PathParam("id") String id) {
+    return gameController.getAllActions();
+  }
 
-    @POST
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Path("/rule/new")
-    public Response addGameRule(GameRule gameRule) {
-        ResponseBuilder rb = Response.status(Status.NOT_FOUND);
-        if (gameController.updateGameRule(gameRule.getId(), gameRule)) {
-            rb = Response.status(Status.OK);
-        }
-        return rb.build();
+  @POST
+  @Consumes({MediaType.APPLICATION_JSON})
+  @Path("/rule/{id}/save")
+  public Response setGameRule(@PathParam("id") String id, GameRule gameRule) {
+    ResponseBuilder rb = Response.status(Status.NOT_FOUND);
+    if (gameController.updateGameRule(id, gameRule)) {
+      rb = Response.status(Status.OK);
     }
+    return rb.build();
+  }
 
-    @POST
-    @Consumes({MediaType.APPLICATION_XML})
-    @Path("/object/{id}/xml/save")
-    public Response setGameObjectXML(@PathParam("id") String id, Shape gameObjectXML) {
-        ResponseBuilder rb = Response.status(Status.NOT_FOUND);
-        if (gameController.updateGameObjectShape(id, gameObjectXML)) {
-            rb = Response.status(Status.OK);
-        }
-        return rb.build();
+  @POST
+  //@Consumes({MediaType.APPLICATION_JSON})
+  @Path("/rule/{id}/remove")
+  public Response removeGameRule(@PathParam("id") String id) {
+    ResponseBuilder rb = Response.status(Status.NOT_FOUND);
+    if (gameController.removeGameRule(id)) {
+      rb = Response.status(Status.OK);
     }
+    return rb.build();
+  }
 
-    @POST
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Path("/object/{id}/remove")
-    public Response removeGameObject(String id) {
-        ResponseBuilder rb = Response.status(Status.NOT_FOUND);
-        if (gameController.removeGameObject(id)) {
-            rb = Response.status(Status.OK);
-        }
-        return rb.build();
+  @POST
+  @Consumes({MediaType.APPLICATION_JSON})
+  @Path("/rule/new")
+  public Response addGameRule(GameRule gameRule) {
+    ResponseBuilder rb = Response.status(Status.NOT_FOUND);
+    if (gameController.updateGameRule(gameRule.getId(), gameRule)) {
+      rb = Response.status(Status.OK);
     }
+    return rb.build();
+  }
+
+  @POST
+  @Consumes({MediaType.APPLICATION_XML})
+  @Path("/object/{id}/xml/save")
+  public Response setGameObjectXML(@PathParam("id") String id, Shape gameObjectXML) {
+    ResponseBuilder rb = Response.status(Status.NOT_FOUND);
+    if (gameController.updateGameObjectShape(id, gameObjectXML)) {
+      rb = Response.status(Status.OK);
+    }
+    return rb.build();
+  }
+
+  @POST
+  @Consumes({MediaType.APPLICATION_JSON})
+  @Path("/object/{id}/remove")
+  public Response removeGameObject(String id) {
+    ResponseBuilder rb = Response.status(Status.NOT_FOUND);
+    if (gameController.removeGameObject(id)) {
+      rb = Response.status(Status.OK);
+    }
+    return rb.build();
+  }
+
 }
