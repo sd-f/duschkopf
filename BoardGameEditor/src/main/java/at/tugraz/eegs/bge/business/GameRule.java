@@ -21,7 +21,7 @@ public class GameRule implements Serializable {
 
     private List<GameRuleCondition> conditions = new ArrayList<GameRuleCondition>();
 
-    private GameAction action;
+    private List<GameAction> actions;
 
     public GameRule() {
     }
@@ -50,12 +50,12 @@ public class GameRule implements Serializable {
         this.conditions = conditions;
     }
 
-    public GameAction getAction() {
-        return action;
+    public List<GameAction> getActions() {
+        return actions;
     }
 
-    public void setAction(GameAction action) {
-        this.action = action;
+    public void setActions(List<GameAction> actions) {
+        this.actions = actions;
     }
 
     @Override

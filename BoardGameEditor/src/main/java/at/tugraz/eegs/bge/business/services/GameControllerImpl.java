@@ -17,6 +17,7 @@
 package at.tugraz.eegs.bge.business.services;
 
 import at.tugraz.eegs.bge.business.Game;
+import at.tugraz.eegs.bge.business.GameAction;
 import at.tugraz.eegs.bge.business.GameObject;
 import at.tugraz.eegs.bge.business.GameRule;
 import at.tugraz.eegs.bge.business.x3d.Appearance;
@@ -26,9 +27,10 @@ import at.tugraz.eegs.bge.business.x3d.Material;
 import at.tugraz.eegs.bge.business.x3d.Shape;
 import at.tugraz.eegs.bge.business.x3d.Sphere;
 import java.io.Serializable;
-import java.text.RuleBasedCollator;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
+import javax.enterprise.inject.Any;
 
 /**
  *
@@ -38,6 +40,9 @@ import javax.ejb.Stateful;
 public class GameControllerImpl implements Serializable {
 
     private Game game;
+
+    @Any
+    private List<GameAction> gameActions;
 
     @PostConstruct
     public void init() {
@@ -50,6 +55,10 @@ public class GameControllerImpl implements Serializable {
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public List<GameAction> getAllActions() {
+        return gameActions;
     }
 
     public void addGameObject(GameObject gameObject) {

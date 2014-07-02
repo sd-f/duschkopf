@@ -16,9 +16,6 @@
  */
 package at.tugraz.eegs.bge.business;
 
-import at.tugraz.eegs.bge.business.x3d.Appearance;
-import at.tugraz.eegs.bge.business.x3d.Cylinder;
-import at.tugraz.eegs.bge.business.x3d.Material;
 import at.tugraz.eegs.bge.business.x3d.Shape;
 import at.tugraz.eegs.bge.business.x3d.Transform;
 import at.tugraz.eegs.bge.business.x3d.X3DGroupingNode;
@@ -100,6 +97,35 @@ public class GameObject {
     public void updateAttributes(GameObject gameObject) {
         this.setName(gameObject.getName());
         this.setPosition(gameObject.getPosition());
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final GameObject other = (GameObject) obj;
+        if ((this.id == null) ? (other.id != null) : !this.id.equals(other.id)) {
+            return false;
+        }
+        return true;
     }
 
 }
