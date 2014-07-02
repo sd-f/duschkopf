@@ -1,4 +1,5 @@
 duschkopf
 =========
 
-Duschkopf
+run with maven: 
+goal: compile tomee:run
